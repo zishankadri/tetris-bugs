@@ -1,3 +1,6 @@
+# Contributors
+- zishankadri
+
 # Python Discord Code Jam Repository Template
 
 ## A primer
