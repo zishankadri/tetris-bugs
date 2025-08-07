@@ -1,5 +1,6 @@
 # Contributors
 - zishankadri
+- rxdiationx
 
 # Python Discord Code Jam Repository Template
 
