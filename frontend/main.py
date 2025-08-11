@@ -154,6 +154,8 @@ def handle_key(evt: KeyboardEvent) -> None:
         moved = game_manager.current_block.move(-1, 0, game_manager.grid)
     elif evt.key == "ArrowRight":
         moved = game_manager.current_block.move(1, 0, game_manager.grid)
+    elif evt.key == "ArrowDown":
+        moved = game_manager.current_block.move(0, 1, game_manager.grid)
     elif evt.key == " ":
         game_manager.current_block.lock(game_manager.grid)
         game_manager.current_block = None
