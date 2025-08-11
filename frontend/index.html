@@ -10,8 +10,8 @@
     <link rel="stylesheet" href="https://pyscript.net/releases/2025.8.1/core.css">
     <script type="module" src="https://pyscript.net/releases/2025.8.1/core.js"></script>
 
-    <link rel="stylesheet" href="./style.css">
-    <link rel="stylesheet" href="./menu.css">
+    <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="style/menu.css">
 </head>
 
 <body>
@@ -29,38 +29,29 @@
     <div class="wrapper">
         <h1 class="font-retro" style="text-align: center; color: lime;">Tetris Bugs</h1>
 
-        <div>
-            <ul class="menu">
-                <li>Files</li>
-                <li>Edit</li>
-                <li>Selection</li>
-                <li>View</li>
-            </ul>
-        </div>
+        
 
-        <input
-            type="text"
-            id="text-input"
-            maxlength="4"
-            placeholder="Type code"
-            class="retro-input"/>
+        <div class="input-row">
+            <input
+                type="text"
+                id="text-input"
+                maxlength="4"
+                placeholder="Type code"
+                class="retro-input"/>
+            <button id="save-btn" class="retro-btn" style="margin-top: 0; margin-left: 10px;">Save Code</button>
+        </div>
 
         <!-- Grid -->
         <div id="game" class="retro-shadow"></div>
     </div>
 
+    <!-- Code Output Section -->
+    <div class="code-output-section">
+        <h3 class="font-retro" style="color: lime; margin-bottom: 10px;">Code:</h3>
+        <div id="text-output" class="retro-shadow code-display"></div>
+    </div>
     <script type="py" src="./main.py"></script>
-    <py-script>
-        from js import document
-        from pyodide.ffi import create_proxy
-
-        def close_modal(evt):
-            modal_bg = document.getElementById("modal-bg")
-            if modal_bg:
-                modal_bg.remove()
-
-        close_modal_proxy = create_proxy(close_modal)
-        document.getElementById("close-btn").addEventListener("click", close_modal_proxy)
-    </py-script>
+    
+    
 </body>
 </html>

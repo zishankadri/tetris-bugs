@@ -1,4 +1,6 @@
-from js import HTMLInputElement, KeyboardEvent, document, setInterval, window
+from datetime import datetime, timezone
+
+from js import URL, Blob, HTMLInputElement, KeyboardEvent, document, setInterval, window
 from pyodide.ffi import create_proxy
 
 MAX_BLOCK_LENGTH = 4
@@ -82,6 +84,34 @@ class GameManager(metaclass=SingletonMeta):  # noqa: D101
         # Keep track of last rendered state to minimize DOM updates
         self._last_rendered_grid = [[None for _ in range(self.cols)] for _ in range(self.rows)]
 
+
+
+    def save_grid_code(self) -> None:
+        """Save the current grid code and display it."""
+        saved_code = self.format_grid_as_text()
+        current_time = datetime.now(timezone.utc).strftime("%H:%M:%S")
+        text_output = document.querySelector("#text-output")
+        if text_output:
+            if saved_code == "Grid is empty":
+                text_output.innerText = saved_code
+            else:
+                text_output.innerText = f"Saved at {current_time}:\n\n{saved_code}"
+
+    def save_grid_code_to_file(self) -> None:
+        """Open a save dialog to save the current grid code as a file."""
+        saved_code = self.format_grid_as_text()
+        blob = Blob.new([saved_code], {"type": "text/plain"})
+        url = URL.createObjectURL(blob)
+        a = document.createElement("a")
+        a.href = url
+        a.download = f"tetris_code_{datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')}.py"
+        a.style.display = "none"
+        document.body.appendChild(a)
+        a.click()
+        document.body.removeChild(a)
+        URL.revokeObjectURL(url)
+
+
     def render(self) -> None:
         """Render grid and current block efficiently by updating only changed cells."""
         # Copy current grid state including current_block overlay
@@ -125,18 +155,23 @@ class GameManager(metaclass=SingletonMeta):  # noqa: D101
             # If can't move down, lock block and clear current_block
             self.current_block.lock(self.grid)
             self.current_block = None
+            # Save code as soon as a block is placed
+            self.save_grid_code()
 
         self.render()
 
     def format_grid_as_text(self) -> str:
         """Format the grid as a text representation."""
-        return "\n".join("".join(cell if cell is not None else "." for cell in row) for row in self.grid)
+        lines = []
+        for row in self.grid:
+            line = "".join(cell if cell is not None else " " for cell in row)
+            # Only add non-empty lines
+            if line.strip():
+                lines.append(line)
+        return "\n".join(lines) if lines else "Grid is empty"
 
-
-def handle_key(evt: KeyboardEvent) -> None:
+def handle_key(evt: KeyboardEvent,game_manager:GameManager) -> None:
     """Handle arrow keys and spacebar."""
-    game_manager = GameManager()
-
     # Ignore input if typing in text box
     active = document.activeElement
     if active and active.id == "text-input":
@@ -154,15 +189,15 @@ def handle_key(evt: KeyboardEvent) -> None:
         game_manager.current_block.lock(game_manager.grid)
         game_manager.current_block = None
         moved = True
+        # Save code as soon as a block is placed
+        game_manager.save_grid_code()
 
     if moved:
         game_manager.render()
 
 
-def handle_input(evt: KeyboardEvent, input_box: HTMLInputElement) -> None:
+def handle_input(evt: KeyboardEvent, input_box: HTMLInputElement,game_manager:GameManager) -> None:
     """Spawn a new block when Enter is pressed."""
-    game_manager = GameManager()
-
     # Only allow new block if none is falling
     if game_manager.current_block and game_manager.current_block.falling:
         return
@@ -177,16 +212,36 @@ def handle_input(evt: KeyboardEvent, input_box: HTMLInputElement) -> None:
             game_manager.render()
 
 
+
+
+def handle_close_modal() -> None:
+    """Handle closing the modal dialog."""
+    modal_bg = document.getElementById("modal-bg")
+    if modal_bg:
+        modal_bg.style.display = "none"
+
+
 def main() -> None:
     """Initialize the game."""
     game_manager = GameManager()
 
     # Bind events
     input_box = document.getElementById("text-input")
-    input_proxy = create_proxy(lambda evt: handle_input(evt, input_box))
+    input_proxy = create_proxy(lambda evt: handle_input(evt, input_box,game_manager))
     input_box.addEventListener("keydown", input_proxy)
 
-    handle_key_proxy = create_proxy(handle_key)
+    # Bind save button
+    save_btn = document.getElementById("save-btn")
+    save_proxy = create_proxy(lambda *_: game_manager.save_grid_code_to_file())
+    save_btn.addEventListener("click", save_proxy)
+
+    # Bind close modal button
+    close_btn = document.getElementById("close-btn")
+    close_proxy = create_proxy(lambda *_: handle_close_modal())
+    close_btn.addEventListener("click", close_proxy)
+
+    #Bind keyboard event inside the game manager
+    handle_key_proxy = create_proxy(lambda evt:handle_key(evt,game_manager))
     window.addEventListener("keydown", handle_key_proxy)
 
     tick_proxy = create_proxy(lambda *_: game_manager.tick())
