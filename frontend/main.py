@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from js import URL, Blob, HTMLInputElement, KeyboardEvent, document, setInterval, window
 from pyodide.ffi import create_proxy
@@ -84,12 +84,10 @@ class GameManager(metaclass=SingletonMeta):  # noqa: D101
         # Keep track of last rendered state to minimize DOM updates
         self._last_rendered_grid = [[None for _ in range(self.cols)] for _ in range(self.rows)]
 
-
-
     def save_grid_code(self) -> None:
         """Save the current grid code and display it."""
         saved_code = self.format_grid_as_text()
-        current_time = datetime.now(timezone.utc).strftime("%H:%M:%S")
+        current_time = datetime.now(UTC).strftime("%H:%M:%S")
         text_output = document.querySelector("#text-output")
         if text_output:
             if saved_code == "Grid is empty":
@@ -104,13 +102,12 @@ class GameManager(metaclass=SingletonMeta):  # noqa: D101
         url = URL.createObjectURL(blob)
         a = document.createElement("a")
         a.href = url
-        a.download = f"tetris_code_{datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')}.py"
+        a.download = f"tetris_code_{datetime.now(UTC).strftime('%Y%m%d_%H%M%S')}.py"
         a.style.display = "none"
         document.body.appendChild(a)
         a.click()
         document.body.removeChild(a)
         URL.revokeObjectURL(url)
-
 
     def render(self) -> None:
         """Render grid and current block efficiently by updating only changed cells."""
@@ -170,7 +167,8 @@ class GameManager(metaclass=SingletonMeta):  # noqa: D101
                 lines.append(line)
         return "\n".join(lines) if lines else "Grid is empty"
 
-def handle_key(evt: KeyboardEvent,game_manager:GameManager) -> None:
+
+def handle_key(evt: KeyboardEvent, game_manager: GameManager) -> None:
     """Handle arrow keys and spacebar."""
     # Ignore input if typing in text box
     active = document.activeElement
@@ -196,7 +194,7 @@ def handle_key(evt: KeyboardEvent,game_manager:GameManager) -> None:
         game_manager.render()
 
 
-def handle_input(evt: KeyboardEvent, input_box: HTMLInputElement,game_manager:GameManager) -> None:
+def handle_input(evt: KeyboardEvent, input_box: HTMLInputElement, game_manager: GameManager) -> None:
     """Spawn a new block when Enter is pressed."""
     # Only allow new block if none is falling
     if game_manager.current_block and game_manager.current_block.falling:
@@ -212,8 +210,6 @@ def handle_input(evt: KeyboardEvent, input_box: HTMLInputElement,game_manager:Ga
             game_manager.render()
 
 
-
-
 def handle_close_modal() -> None:
     """Handle closing the modal dialog."""
     modal_bg = document.getElementById("modal-bg")
@@ -227,7 +223,7 @@ def main() -> None:
 
     # Bind events
     input_box = document.getElementById("text-input")
-    input_proxy = create_proxy(lambda evt: handle_input(evt, input_box,game_manager))
+    input_proxy = create_proxy(lambda evt: handle_input(evt, input_box, game_manager))
     input_box.addEventListener("keydown", input_proxy)
 
     # Bind save button
@@ -240,8 +236,8 @@ def main() -> None:
     close_proxy = create_proxy(lambda *_: handle_close_modal())
     close_btn.addEventListener("click", close_proxy)
 
-    #Bind keyboard event inside the game manager
-    handle_key_proxy = create_proxy(lambda evt:handle_key(evt,game_manager))
+    # Bind keyboard event inside the game manager
+    handle_key_proxy = create_proxy(lambda evt: handle_key(evt, game_manager))
     window.addEventListener("keydown", handle_key_proxy)
 
     tick_proxy = create_proxy(lambda *_: game_manager.tick())
