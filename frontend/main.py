@@ -1,4 +1,8 @@
+from random import randint
+
 from js import HTMLInputElement, KeyboardEvent, document, setInterval, window
+
+# pyright: reportMissingImports=false
 from pyodide.ffi import create_proxy
 
 MAX_BLOCK_LENGTH = 4
@@ -18,13 +22,13 @@ class Block:
     """Represents a horizontal text block moving on a grid."""
 
     def __init__(self, text: str, grid_cols: int, grid_rows: int) -> None:
+        self.max_start_y = 2
         self.text = text[: min(MAX_BLOCK_LENGTH, grid_cols)]
         self.cols = grid_cols
         self.rows = grid_rows
-        # TODO: Randomize initial position
-        # Center horizontally, start at top
-        self.x = max(0, min((self.cols - len(self.text)) // 2, self.cols - len(self.text)))
-        self.y = 0
+        # Spawns block randomly
+        self.x = randint(0, self.cols - len(self.text))  # noqa: S311
+        self.y = randint(0, self.max_start_y)  # noqa: S311
         self.falling = True
 
     def can_move(self, dx: int, dy: int, grid: list[list[str | None]]) -> bool:
