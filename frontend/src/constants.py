@@ -1,0 +1,1 @@
+MAX_BLOCK_LENGTH = 4

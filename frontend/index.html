@@ -17,13 +17,13 @@
 <body>
     <!-- Modal markup directly in HTML -->
     <div id="modal-bg" class="modal-bg">
-      <div class="modal retro-shadow">
-        <button id="close-btn" class="close-btn font-retro">X</button>
-        <div class="font-retro">
-            Type max 4 characters and <br> press Enter to spawn a block. <br>
-            Use ⬅️ ➡️ to move, _Space_ to lock. <br> Blocks fall automatically.
+        <div class="modal retro-shadow">
+            <button id="close-btn" class="close-btn font-retro">X</button>
+            <div class="font-retro">
+                Type max 4 characters and <br> press Enter to spawn a block. <br>
+                Use ⬅️ ➡️ to move, _Space_ to lock. <br> Blocks fall automatically.
+            </div>
         </div>
-      </div>
     </div>
 
     <div class="wrapper">
@@ -38,29 +38,13 @@
             </ul>
         </div>
 
-        <input
-            type="text"
-            id="text-input"
-            maxlength="4"
-            placeholder="Type code"
-            class="retro-input"/>
+        <input type="text" id="text-input" maxlength="4" placeholder="Type code" class="retro-input" />
 
         <!-- Grid -->
         <div id="game" class="retro-shadow"></div>
     </div>
-
-    <script type="py" src="./main.py"></script>
-    <py-script>
-        from js import document
-        from pyodide.ffi import create_proxy
-
-        def close_modal(evt):
-            modal_bg = document.getElementById("modal-bg")
-            if modal_bg:
-                modal_bg.remove()
-
-        close_modal_proxy = create_proxy(close_modal)
-        document.getElementById("close-btn").addEventListener("click", close_modal_proxy)
-    </py-script>
+    <script type="py" src="./main.py" config="config.json"></script>
+    <script type="py" src="./src/modal.py"></script>
 </body>
+
 </html>
