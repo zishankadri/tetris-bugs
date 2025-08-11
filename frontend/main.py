@@ -216,7 +216,7 @@ def handle_close_modal() -> None:
     if modal_bg:
         modal_bg.style.display = "none"
 
-
+#main game loop
 def main() -> None:
     """Initialize the game."""
     game_manager = GameManager()
