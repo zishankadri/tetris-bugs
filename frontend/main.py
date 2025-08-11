@@ -92,7 +92,7 @@ class GameManager(metaclass=SingletonMeta):  # noqa: D101
         current_time = datetime.now(UTC).strftime("%H:%M:%S")
         text_output = document.querySelector("#text-output")
         if text_output:
-            if saved_code == "Grid is empty":
+            if saved_code == "":
                 text_output.innerText = saved_code
             else:
                 text_output.innerText = f"Saved at {current_time}:\n\n{saved_code}"
@@ -154,9 +154,6 @@ class GameManager(metaclass=SingletonMeta):  # noqa: D101
             # If can't move down, lock block and clear current_block
             self.current_block.lock(self.grid)
             self.current_block = None
-            # Save code as soon as a block is placed
-            self.save_grid_code()
-
         self.render()
 
     def format_grid_as_text(self) -> str:
@@ -167,7 +164,7 @@ class GameManager(metaclass=SingletonMeta):  # noqa: D101
             # Only add non-empty lines
             if line.strip():
                 lines.append(line)
-        return "\n".join(lines) if lines else "Grid is empty"
+        return "\n".join(lines) if lines else ""
 
 
 def handle_key(evt: KeyboardEvent, game_manager: GameManager) -> None:
