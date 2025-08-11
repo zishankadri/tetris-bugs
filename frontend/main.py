@@ -25,7 +25,7 @@ class Block:
         self.text = text[: min(MAX_BLOCK_LENGTH, grid_cols)]
         self.cols = grid_cols
         self.rows = grid_rows
-        # Spawns block randomly
+        # Spawns blocks randomly along the x-axis.
         self.x = randint(0, self.cols - len(self.text))  # noqa: S311
         self.y = 0
         self.falling = True
