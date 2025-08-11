@@ -1,6 +1,10 @@
-from block import Block
-from standard import SingletonMeta
+from typing import TYPE_CHECKING
+
 from js import document
+from standard import SingletonMeta
+
+if TYPE_CHECKING:
+    from block import Block
 
 
 class GameManager(metaclass=SingletonMeta):  # noqa: D101
