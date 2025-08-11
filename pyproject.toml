@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "backend"
+name = "code-jam-template"
 version = "0.1.0"
 description = "Add your description here"
 authors = ["Your Name <youremail@example.com>"]

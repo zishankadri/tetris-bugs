@@ -1,6 +1,9 @@
 from datetime import UTC, datetime
+from random import randint
 
 from js import URL, Blob, HTMLInputElement, KeyboardEvent, document, setInterval, window
+
+# pyright: reportMissingImports=false
 from pyodide.ffi import create_proxy
 
 MAX_BLOCK_LENGTH = 4
@@ -23,9 +26,8 @@ class Block:
         self.text = text[: min(MAX_BLOCK_LENGTH, grid_cols)]
         self.cols = grid_cols
         self.rows = grid_rows
-        # TODO: Randomize initial position
-        # Center horizontally, start at top
-        self.x = max(0, min((self.cols - len(self.text)) // 2, self.cols - len(self.text)))
+        # Spawns blocks randomly along the x-axis.
+        self.x = randint(0, self.cols - len(self.text))  # noqa: S311
         self.y = 0
         self.falling = True
 
@@ -183,6 +185,8 @@ def handle_key(evt: KeyboardEvent, game_manager: GameManager) -> None:
         moved = game_manager.current_block.move(-1, 0, game_manager.grid)
     elif evt.key == "ArrowRight":
         moved = game_manager.current_block.move(1, 0, game_manager.grid)
+    elif evt.key == "ArrowDown":
+        moved = game_manager.current_block.move(0, 1, game_manager.grid)
     elif evt.key == " ":
         game_manager.current_block.lock(game_manager.grid)
         game_manager.current_block = None
@@ -216,7 +220,8 @@ def handle_close_modal() -> None:
     if modal_bg:
         modal_bg.style.display = "none"
 
-#main game loop
+
+# main game loop
 def main() -> None:
     """Initialize the game."""
     game_manager = GameManager()
