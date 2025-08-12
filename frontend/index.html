@@ -10,8 +10,8 @@
     <link rel="stylesheet" href="https://pyscript.net/releases/2025.8.1/core.css">
     <script type="module" src="https://pyscript.net/releases/2025.8.1/core.js"></script>
 
-    <link rel="stylesheet" href="./style.css">
-    <link rel="stylesheet" href="./menu.css">
+    <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="style/menu.css">
 </head>
 
 <body>
@@ -40,11 +40,20 @@
 
         <input type="text" id="text-input" maxlength="4" placeholder="Type code" class="retro-input" />
 
+        <!-- Save Button -->
+        <button id="save-btn" class="retro-btn" style="margin-top: 0; margin-left: 10px;">Save Code</button>
+
         <!-- Grid -->
         <div id="game" class="retro-shadow"></div>
     </div>
+
+    <div class="code-output-section">
+        <h3 class="font-retro" style="color: lime; margin-bottom: 10px;">Code:</h3>
+        <div id="text-output" class="retro-shadow code-display"></div>
+    </div>
+
     <script type="py" src="./main.py" config="config.json"></script>
-    <script type="py" src="./src/modal.py"></script>
+    <!-- <script type="py" src="./src/modal.py"></script> -->
 </body>
 
 </html>

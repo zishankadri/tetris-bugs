@@ -1,6 +1,7 @@
+from datetime import UTC, datetime
 from typing import TYPE_CHECKING
 
-from js import document
+from js import URL, Blob, document
 from standard import SingletonMeta
 
 if TYPE_CHECKING:
@@ -30,6 +31,31 @@ class GameManager(metaclass=SingletonMeta):  # noqa: D101
 
         # Keep track of last rendered state to minimize DOM updates
         self._last_rendered_grid = [[None for _ in range(self.cols)] for _ in range(self.rows)]
+
+    def save_grid_code(self) -> None:
+        """Save the current grid code and display it."""
+        saved_code = self.format_grid_as_text()
+        current_time = datetime.now(UTC).strftime("%H:%M:%S")
+        text_output = document.querySelector("#text-output")
+        if text_output:
+            if saved_code == "":
+                text_output.innerText = saved_code
+            else:
+                text_output.innerText = f"Saved at {current_time}:\n\n{saved_code}"
+
+    def save_grid_code_to_file(self) -> None:
+        """Open a save dialog to save the current grid code as a file."""
+        saved_code = self.format_grid_as_text()
+        blob = Blob.new([saved_code], {"type": "text/plain"})
+        url = URL.createObjectURL(blob)
+        a = document.createElement("a")
+        a.href = url
+        a.download = f"tetris_code_{datetime.now(UTC).strftime('%Y%m%d_%H%M%S')}.py"
+        a.style.display = "none"
+        document.body.appendChild(a)
+        a.click()
+        document.body.removeChild(a)
+        URL.revokeObjectURL(url)
 
     def render(self) -> None:
         """Render grid and current block efficiently by updating only changed cells."""
@@ -74,9 +100,14 @@ class GameManager(metaclass=SingletonMeta):  # noqa: D101
             # If can't move down, lock block and clear current_block
             self.current_block.lock(self.grid)
             self.current_block = None
-
         self.render()
 
     def format_grid_as_text(self) -> str:
         """Format the grid as a text representation."""
-        return "\n".join("".join(cell if cell is not None else "." for cell in row) for row in self.grid)
+        lines = []
+        for row in self.grid:
+            line = "".join(cell if cell is not None else " " for cell in row)
+            # Only add non-empty lines
+            if line.strip():
+                lines.append(line)
+        return "\n".join(lines) if lines else ""

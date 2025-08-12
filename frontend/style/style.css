@@ -93,3 +93,27 @@ body {
         4px 4px 0 #ff00ff,  /* neon green shadow */
         8px 8px 0 #00ffff;  /* darker green shadow */
 }
+
+/* Code output section styling to match the glitchy retro effect */
+.code-output-section {
+    margin-top: 20px;
+    width: 100%;
+    max-width: 800px;
+    text-align: center;
+}
+
+.code-display {
+    background: #222;
+    border: 1px solid lime;
+    padding: 15px;
+    margin-top: 10px;
+    text-align: left;
+    font-family: monospace;
+    font-size: 14px;
+    line-height: 1.4;
+    color: lime;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    min-height: 60px;
+    overflow-wrap: break-word;
+}

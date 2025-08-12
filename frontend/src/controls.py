@@ -4,10 +4,8 @@ from game import GameManager
 from js import HTMLInputElement, KeyboardEvent, document
 
 
-def handle_key(evt: KeyboardEvent) -> None:
+def handle_key(evt: KeyboardEvent, game_manager: GameManager) -> None:
     """Handle arrow keys and spacebar."""
-    game_manager = GameManager()
-
     # Ignore input if typing in text box
     active = document.activeElement
     if active and active.id == "text-input":
@@ -27,15 +25,15 @@ def handle_key(evt: KeyboardEvent) -> None:
         game_manager.current_block.lock(game_manager.grid)
         game_manager.current_block = None
         moved = True
+        # Save code as soon as a block is placed
+        game_manager.save_grid_code()
 
     if moved:
         game_manager.render()
 
 
-def handle_input(evt: KeyboardEvent, input_box: HTMLInputElement) -> None:
+def handle_input(evt: KeyboardEvent, input_box: HTMLInputElement, game_manager: GameManager) -> None:
     """Spawn a new block when Enter is pressed."""
-    game_manager = GameManager()
-
     # Only allow new block if none is falling
     if game_manager.current_block and game_manager.current_block.falling:
         return
