@@ -11,10 +11,17 @@ body {
     color: white;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
     height: 100vh;
     width: 100%;
+}
+
+#wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    flex: 1;
 }
 #game {
     display: grid;
@@ -49,24 +56,19 @@ body {
     margin-top: 10px;
 }
 
-.menu {
-    list-style: none;
-    padding: 4px 0;
-    display: flex;
-    gap: 10px;
-    margin-bottom: 10px;
-}
-
 .retro-btn {
     background-color: #11ce60;
     color: rgb(0, 0, 0);
     border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    border-radius: 2px;
     cursor: pointer;
+    font-size: smaller;
     font-family: "Press Start 2P", system-ui;
-    font-weight: 400;
-    font-style: normal;
+}
+.retro-btn:hover {
+    background-color: #0fb350;
+    transform: translateY(-2px);
 }
 
 .retro-input {
@@ -90,8 +92,8 @@ body {
 }
 .retro-shadow {
     box-shadow:
-        4px 4px 0 #ff00ff,  /* neon green shadow */
-        8px 8px 0 #00ffff;  /* darker green shadow */
+        4px 4px 0 #ff00ff,
+        8px 8px 0 #00ffff;
 }
 
 /* Fix for the wrapper layout */
@@ -144,4 +146,29 @@ body {
 /* Hide loading screen when content is ready */
 .loading-screen.hidden {
     display: none;
+}
+
+.top-bar {
+    display: flex;
+    justify-content: center;
+    padding-top: 1rem;
+}
+
+/* Focus logic */
+#wrapper:focus-within .retro-shadow {
+    box-shadow: none; /* This removes the shadow */
+    border-color: transparent; /* This removes the border */
+}
+
+#text-input:focus {
+    outline: 2px solid lime;
+    outline-offset: 2px;
+    border-color: transparent;
+}
+
+.text-bar {
+    width: calc(40px * 20 + 39px); /* 40px for each cell, 39px for the gaps */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }

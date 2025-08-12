@@ -22,9 +22,13 @@ def handle_key(evt: KeyboardEvent, game_manager: GameManager) -> None:
     elif evt.key == "ArrowDown":
         moved = game_manager.current_block.move(0, 1, game_manager.grid)
     elif evt.key == " ":
+        evt.preventDefault()
         game_manager.current_block.lock(game_manager.grid)
         game_manager.current_block = None
         moved = True
+        # Focus the input field
+        input_box = document.getElementById("text-input")
+        input_box.focus()
     if moved:
         game_manager.render()
 

@@ -1,7 +1,7 @@
 from controls import handle_input, handle_key
 from game import GameManager
 from js import document, setInterval, window
-from modal import close_modal
+from modal import continue_modal
 
 # pyright: reportMissingImports=false
 from pyodide.ffi import create_proxy
@@ -25,7 +25,7 @@ def main() -> None:
 
     # Bind continue modal button
     continue_btn = document.getElementById("continue-btn")
-    continue_proxy = create_proxy(lambda *_: close_modal("modal-bg"))
+    continue_proxy = create_proxy(lambda *_: continue_modal("modal-bg"))
     continue_btn.addEventListener("click", continue_proxy)
 
     # Bind keyboard event inside the game manager
