@@ -33,8 +33,9 @@
     background-color: #11ce60;
     color: rgb(0, 0, 0);
     border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
+    padding: 1rem 2rem;
+    text-transform: uppercase;
+    border-radius: 2px;
     cursor: pointer;
     font-family: "Press Start 2P", system-ui;
     font-weight: 400;
@@ -47,5 +48,4 @@
 .continue-btn:hover {
     background-color: #0fb350;
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(17, 206, 96, 0.3);
 }
