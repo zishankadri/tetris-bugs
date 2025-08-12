@@ -1,11 +1,11 @@
-from datetime import UTC, datetime
 from typing import TYPE_CHECKING
 
-from js import URL, Blob, document
 from standard import SingletonMeta
 
 if TYPE_CHECKING:
     from block import Block
+
+from utils import create_visual_grid
 
 
 class GameManager(metaclass=SingletonMeta):  # noqa: D101
@@ -14,37 +14,13 @@ class GameManager(metaclass=SingletonMeta):  # noqa: D101
         self.cols, self.rows = 40, 20
         self.grid = [[None for _ in range(self.cols)] for _ in range(self.rows)]
         self.current_block: Block | None = None
-
-        # Create visual grid
-        game_div = document.getElementById("game")
         self.cells = []
-        fragment = document.createDocumentFragment()
-        for _y in range(self.rows):
-            row = []
-            for _x in range(self.cols):
-                cell = document.createElement("div")
-                cell.classList.add("cell")
-                fragment.appendChild(cell)
-                row.append(cell)
-            self.cells.append(row)
-        game_div.appendChild(fragment)
+
+        # Create display grid
+        create_visual_grid(self)
 
         # Keep track of last rendered state to minimize DOM updates
         self._last_rendered_grid = [[None for _ in range(self.cols)] for _ in range(self.rows)]
-
-    def save_grid_code_to_file(self) -> None:
-        """Open a save dialog to save the current grid code as a file."""
-        saved_code = self.format_grid_as_text()
-        blob = Blob.new([saved_code], {"type": "text/plain"})
-        url = URL.createObjectURL(blob)
-        blob_link = document.createElement("a")
-        blob_link.href = url
-        blob_link.download = f"tetris_code_{datetime.now(UTC).strftime('%Y%m%d_%H%M%S')}.py"
-        blob_link.style.display = "none"
-        document.body.appendChild(blob_link)
-        blob_link.click()
-        document.body.removeChild(blob_link)
-        URL.revokeObjectURL(url)
 
     def render(self) -> None:
         """Render grid and current block efficiently by updating only changed cells."""
@@ -100,3 +76,6 @@ class GameManager(metaclass=SingletonMeta):  # noqa: D101
             if line.strip():
                 lines.append(line)
         return "\n".join(lines) if lines else ""
+
+
+game_manager = GameManager()

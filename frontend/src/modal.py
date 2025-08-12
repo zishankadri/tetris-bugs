@@ -1,9 +1,8 @@
 from js import document
-from pyodide.ffi import JsProxy
 
 
-def continue_modal(_evt: JsProxy) -> None:
-    """Close the modal by removing its background element from the DOM."""
-    modal_bg = document.getElementById("modal-bg")
+def close_modal(id: str) -> None:
+    """Close a modal dialog by its DOM element ID."""
+    modal_bg = document.getElementById(id)
     if modal_bg:
         modal_bg.remove()

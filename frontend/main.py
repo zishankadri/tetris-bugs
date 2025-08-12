@@ -1,10 +1,11 @@
 from controls import handle_input, handle_key
 from game import GameManager
 from js import document, setInterval, window
-from modal import continue_modal
+from modal import close_modal
 
 # pyright: reportMissingImports=false
 from pyodide.ffi import create_proxy
+from utils import save_grid_code_to_file
 
 
 def main() -> None:
@@ -18,12 +19,12 @@ def main() -> None:
 
     # Bind save button
     save_btn = document.getElementById("save-btn")
-    save_proxy = create_proxy(lambda *_: game_manager.save_grid_code_to_file())
+    save_proxy = create_proxy(lambda *_: save_grid_code_to_file(game_manager))
     save_btn.addEventListener("click", save_proxy)
 
     # Bind continue modal button
     continue_btn = document.getElementById("continue-btn")
-    continue_proxy = create_proxy(continue_modal)
+    continue_proxy = create_proxy(lambda *_: close_modal("modal-bg"))
     continue_btn.addEventListener("click", continue_proxy)
 
     # Bind keyboard event inside the game manager
