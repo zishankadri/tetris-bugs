@@ -1,6 +1,5 @@
 from typing import TYPE_CHECKING
 
-from js import document
 from standard import SingletonMeta
 
 if TYPE_CHECKING:
@@ -13,20 +12,7 @@ class GameManager(metaclass=SingletonMeta):  # noqa: D101
         self.cols, self.rows = 40, 20
         self.grid = [[None for _ in range(self.cols)] for _ in range(self.rows)]
         self.current_block: Block | None = None
-
-        # Create visual grid
-        game_div = document.getElementById("game")
         self.cells = []
-        fragment = document.createDocumentFragment()
-        for _y in range(self.rows):
-            row = []
-            for _x in range(self.cols):
-                cell = document.createElement("div")
-                cell.classList.add("cell")
-                fragment.appendChild(cell)
-                row.append(cell)
-            self.cells.append(row)
-        game_div.appendChild(fragment)
 
         # Keep track of last rendered state to minimize DOM updates
         self._last_rendered_grid = [[None for _ in range(self.cols)] for _ in range(self.rows)]
@@ -74,9 +60,17 @@ class GameManager(metaclass=SingletonMeta):  # noqa: D101
             # If can't move down, lock block and clear current_block
             self.current_block.lock(self.grid)
             self.current_block = None
-
         self.render()
 
     def format_grid_as_text(self) -> str:
         """Format the grid as a text representation."""
-        return "\n".join("".join(cell if cell is not None else "." for cell in row) for row in self.grid)
+        lines = []
+        for row in self.grid:
+            line = "".join(cell if cell is not None else " " for cell in row)
+            # Only add non-empty lines
+            if line.strip():
+                lines.append(line)
+        return "\n".join(lines) if lines else ""
+
+
+game_manager = GameManager()
