@@ -5,12 +5,13 @@ from modal import close_modal
 
 # pyright: reportMissingImports=false
 from pyodide.ffi import create_proxy
-from utils import save_grid_code_to_file
+from utils import create_visual_grid, save_grid_code_to_file
 
 
 def main() -> None:
     """Initialize the game."""
     game_manager = GameManager()
+    create_visual_grid(game_manager)  # Create display grid
 
     # Bind events
     input_box = document.getElementById("text-input")

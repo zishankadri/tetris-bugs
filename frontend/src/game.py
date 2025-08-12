@@ -5,8 +5,6 @@ from standard import SingletonMeta
 if TYPE_CHECKING:
     from block import Block
 
-from utils import create_visual_grid
-
 
 class GameManager(metaclass=SingletonMeta):  # noqa: D101
     def __init__(self) -> None:
@@ -15,9 +13,6 @@ class GameManager(metaclass=SingletonMeta):  # noqa: D101
         self.grid = [[None for _ in range(self.cols)] for _ in range(self.rows)]
         self.current_block: Block | None = None
         self.cells = []
-
-        # Create display grid
-        create_visual_grid(self)
 
         # Keep track of last rendered state to minimize DOM updates
         self._last_rendered_grid = [[None for _ in range(self.cols)] for _ in range(self.rows)]
