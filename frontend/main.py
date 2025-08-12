@@ -1,7 +1,7 @@
 from controls import handle_input, handle_key
 from game import GameManager
 from js import document, setInterval, window
-from modal import close_modal
+from modal import continue_modal
 
 # pyright: reportMissingImports=false
 from pyodide.ffi import create_proxy
@@ -21,10 +21,10 @@ def main() -> None:
     save_proxy = create_proxy(lambda *_: game_manager.save_grid_code_to_file())
     save_btn.addEventListener("click", save_proxy)
 
-    # Bind close modal button
-    close_btn = document.getElementById("close-btn")
-    close_proxy = create_proxy(close_modal)
-    close_btn.addEventListener("click", close_proxy)
+    # Bind continue modal button
+    continue_btn = document.getElementById("continue-btn")
+    continue_proxy = create_proxy(continue_modal)
+    continue_btn.addEventListener("click", continue_proxy)
 
     # Bind keyboard event inside the game manager
     handle_key_proxy = create_proxy(lambda evt: handle_key(evt, game_manager))
@@ -34,6 +34,11 @@ def main() -> None:
     setInterval(tick_proxy, 500)
 
     game_manager.render()
+
+    # Hide loading screen once game is ready
+    loading_screen = document.getElementById("loading-screen")
+    if loading_screen:
+        loading_screen.classList.add("hidden")
 
 
 main()

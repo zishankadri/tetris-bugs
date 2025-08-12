@@ -15,14 +15,23 @@
 </head>
 
 <body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-content retro-shadow">
+            <h1 class="font-retro" style="color: lime; margin-bottom: 20px;">Tetris Bugs</h1>
+            <div class="loading-spinner"></div>
+            <p class="font-retro" style="color: lime; margin-top: 20px;">Loading...</p>
+        </div>
+    </div>
+
     <!-- Modal markup directly in HTML -->
     <div id="modal-bg" class="modal-bg">
         <div class="modal retro-shadow">
-            <button id="close-btn" class="close-btn font-retro">X</button>
             <div class="font-retro">
                 Type max 4 characters and <br> press Enter to spawn a block. <br>
                 Use ⬅️ ➡️ to move, _Space_ to lock. <br> Blocks fall automatically.
             </div>
+            <button id="continue-btn" class="continue-btn font-retro">Continue</button>
         </div>
     </div>
 
@@ -38,10 +47,10 @@
             </ul>
         </div>
 
-        <input type="text" id="text-input" maxlength="4" placeholder="Type code" class="retro-input" />
-
-        <!-- Save Button -->
-        <button id="save-btn" class="retro-btn" style="margin-top: 0; margin-left: 10px;">Save Code</button>
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <input type="text" id="text-input" maxlength="4" placeholder="Type code" class="retro-input" />
+            <button id="save-btn" class="retro-btn">Save Code</button>
+        </div>
 
         <!-- Grid -->
         <div id="game" class="retro-shadow"></div>
@@ -51,9 +60,33 @@
         <h3 class="font-retro" style="color: lime; margin-bottom: 10px;">Code:</h3>
         <div id="text-output" class="retro-shadow code-display"></div>
     </div>
-
+    <!-- pyscript -->
     <script type="py" src="./main.py" config="config.json"></script>
-    <!-- <script type="py" src="./src/modal.py"></script> -->
+
+    <!-- simple javascript to add a loading screen -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            const checkPyScript = setInterval(function() {
+                if (window.pyodide && window.pyodide.isReady) {
+                    clearInterval(checkPyScript);
+                    hideLoadingScreen();
+                }
+            }, 100);
+
+            setTimeout(function() {
+                clearInterval(checkPyScript);
+                hideLoadingScreen();
+            }, 5000);
+        });
+
+        function hideLoadingScreen() {
+            const loadingScreen = document.getElementById('loading-screen');
+            if (loadingScreen) {
+                loadingScreen.classList.add('hidden');
+            }
+        }
+    </script>
 </body>
 
 </html>

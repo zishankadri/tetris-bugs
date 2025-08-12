@@ -48,13 +48,13 @@ class GameManager(metaclass=SingletonMeta):  # noqa: D101
         saved_code = self.format_grid_as_text()
         blob = Blob.new([saved_code], {"type": "text/plain"})
         url = URL.createObjectURL(blob)
-        a = document.createElement("a")
-        a.href = url
-        a.download = f"tetris_code_{datetime.now(UTC).strftime('%Y%m%d_%H%M%S')}.py"
-        a.style.display = "none"
-        document.body.appendChild(a)
-        a.click()
-        document.body.removeChild(a)
+        blob_link = document.createElement("a")
+        blob_link.href = url
+        blob_link.download = f"tetris_code_{datetime.now(UTC).strftime('%Y%m%d_%H%M%S')}.py"
+        blob_link.style.display = "none"
+        document.body.appendChild(blob_link)
+        blob_link.click()
+        document.body.removeChild(blob_link)
         URL.revokeObjectURL(url)
 
     def render(self) -> None:
