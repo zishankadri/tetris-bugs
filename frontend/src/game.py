@@ -32,17 +32,6 @@ class GameManager(metaclass=SingletonMeta):  # noqa: D101
         # Keep track of last rendered state to minimize DOM updates
         self._last_rendered_grid = [[None for _ in range(self.cols)] for _ in range(self.rows)]
 
-    def save_grid_code(self) -> None:
-        """Save the current grid code and display it."""
-        saved_code = self.format_grid_as_text()
-        current_time = datetime.now(UTC).strftime("%H:%M:%S")
-        text_output = document.querySelector("#text-output")
-        if text_output:
-            if saved_code == "":
-                text_output.innerText = saved_code
-            else:
-                text_output.innerText = f"Saved at {current_time}:\n\n{saved_code}"
-
     def save_grid_code_to_file(self) -> None:
         """Open a save dialog to save the current grid code as a file."""
         saved_code = self.format_grid_as_text()

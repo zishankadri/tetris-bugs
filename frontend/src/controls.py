@@ -25,9 +25,6 @@ def handle_key(evt: KeyboardEvent, game_manager: GameManager) -> None:
         game_manager.current_block.lock(game_manager.grid)
         game_manager.current_block = None
         moved = True
-        # Save code as soon as a block is placed
-        game_manager.save_grid_code()
-
     if moved:
         game_manager.render()
 
