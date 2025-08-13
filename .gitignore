@@ -29,3 +29,10 @@ build/
 .vscode/
 # MacOS
 .DS_Store
+
+# npm and tailwindcss
+# Dependency directory
+node_modules/
+
+# Generated files
+dist/
