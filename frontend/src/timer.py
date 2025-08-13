@@ -7,7 +7,8 @@ interval_id = None
 
 
 def run_timer() -> None:
-    global time_left, interval_id
+    """Run the timer."""
+    global time_left, interval_id  # noqa: PLW0603
     timer_element = document.getElementById("timer")
     if not timer_element:
         return
@@ -23,7 +24,8 @@ def run_timer() -> None:
 
 
 def start_timer() -> None:
-    global interval_id
+    """Start the timer."""
+    global interval_id  # noqa: PLW0603
     if interval_id is None:
         run_timer()
         timer_proxy = create_proxy(run_timer)
