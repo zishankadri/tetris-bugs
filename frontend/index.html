@@ -54,16 +54,11 @@
   <!-- Wrapper -->
   <div id="wrapper" class="flex flex-col items-center justify-center flex-1 w-full">
 
-    <!-- Text Bar -->
-    <div class="flex justify-between items-center w-[839px] mt-5">
-      <input type="text" id="text-input" maxlength="4" placeholder="Type code"
-        class="px-2 py-1 text-white bg-[#111] border border-dashed border-gray-700 rounded" autofocus>
-
-      <button id="save-btn"
-        class="retro-btn text-xs">
-        Export File
-      </button>
-    </div>
+        <div class="text-bar">
+            <input type="text" id="text-input" maxlength="4" placeholder="Type code" class="retro-input" autofocus/>
+            <p id="timer"></p>
+            <button id="save-btn" class="retro-btn">Export File</button>
+        </div>
 
     <!-- Grid -->
     <div id="game"

@@ -7,6 +7,7 @@
     "./src/standard.py": "",
     "./src/ui_helpers.py": "",
     "./src/assets/block.py": "",
-    "./src/assets/bugs.py": ""
+    "./src/assets/bugs.py": "",
+    "./src/timer.py": ""
   }
 }

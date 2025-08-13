@@ -1,3 +1,5 @@
+from typing import Tuple  # noqa: UP035
+
 from controls import handle_input, handle_key
 from game import GameManager
 from js import document, setInterval, window
@@ -5,6 +7,7 @@ from modal import continue_modal
 
 # pyright: reportMissingImports=false
 from pyodide.ffi import create_proxy
+from timer import start_timer
 from ui_helpers import create_visual_grid, save_grid_code_to_file
 
 
@@ -23,9 +26,15 @@ def main() -> None:
     save_proxy = create_proxy(lambda *_: save_grid_code_to_file())
     save_btn.addEventListener("click", save_proxy)
 
-    # Bind continue modal button
+    # Bind continue modal button and start timer
     continue_btn = document.getElementById("continue-btn")
-    continue_proxy = create_proxy(lambda *_: continue_modal("modal-bg"))
+    if continue_btn:
+
+        def on_continue(*_args: Tuple) -> None:  # noqa: UP006
+            continue_modal("modal-bg")  # hide modal
+            start_timer()  # start the timer
+
+    continue_proxy = create_proxy(on_continue)
     continue_btn.addEventListener("click", continue_proxy)
 
     # Bind keyboard event inside the game manager
