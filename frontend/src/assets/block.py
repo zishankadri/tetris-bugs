@@ -1,6 +1,8 @@
 from random import randint
 
 from constants import MAX_BLOCK_LENGTH
+from game import game_manager
+from ui_helpers import lock_visual_cells
 
 
 class Block:
@@ -44,3 +46,8 @@ class Block:
             if 0 <= tx < self.cols and 0 <= ty < self.rows:
                 grid[ty][tx] = ch
         self.falling = False
+        lock_visual_cells()
+
+    def get_cells(self) -> list[list[int, int]]:
+        """Return the DOM elements representing the cells of the current block."""
+        return [game_manager.cells[self.y][self.x + i] for i in range(len(self.text))]

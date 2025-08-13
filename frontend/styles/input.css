@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Press+Start+2P&display=swap');
 
 /* Import custom CSS files */
 /* @import "./base.css"; */
@@ -21,6 +21,7 @@
 @theme {
   --animate-spin: spin 1s linear infinite;
   --color-brand: #11ce60; /* lime-500 by default */
+  --font-mono: "JetBrains Mono", monospace;
   --font-retro: "Press Start 2P", system-ui;
 }
 
@@ -33,14 +34,17 @@
   }
 }
 
+.block {
+  @apply font-mono bg-brand text-black text-center;
+}
+
 .cell {
   @apply w-[20px] h-[20px] bg-[#111] border border-black;
   @apply text-white text-[12px] font-mono flex items-center justify-center;
 }
 
 .locked-cell {
-    background: #555;
-    font-weight: bold;
+    @apply font-mono bg-[#222] flex items-center justify-center;
 }
 
 .retro-shadow {
