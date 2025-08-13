@@ -5,13 +5,13 @@ from modal import continue_modal
 
 # pyright: reportMissingImports=false
 from pyodide.ffi import create_proxy
-from utils import create_visual_grid, save_grid_code_to_file
+from ui_helpers import create_visual_grid, save_grid_code_to_file
 
 
 def main() -> None:
     """Initialize the game."""
     game_manager = GameManager()
-    create_visual_grid(game_manager)  # Create display grid
+    create_visual_grid()  # Create display grid
 
     # Bind events
     input_box = document.getElementById("text-input")
@@ -20,7 +20,7 @@ def main() -> None:
 
     # Bind save button
     save_btn = document.getElementById("save-btn")
-    save_proxy = create_proxy(lambda *_: save_grid_code_to_file(game_manager))
+    save_proxy = create_proxy(lambda *_: save_grid_code_to_file())
     save_btn.addEventListener("click", save_proxy)
 
     # Bind continue modal button

@@ -1,15 +1,12 @@
 from __future__ import annotations
 
 from datetime import UTC, datetime
-from typing import TYPE_CHECKING
 
+from game import game_manager
 from js import URL, Blob, document
 
-if TYPE_CHECKING:
-    from game_manager import GameManager
 
-
-def create_visual_grid(game_manager: GameManager) -> None:
+def create_visual_grid() -> None:
     """Create visual grid."""
     game_div = document.getElementById("game")
     fragment = document.createDocumentFragment()
@@ -24,7 +21,14 @@ def create_visual_grid(game_manager: GameManager) -> None:
     game_div.appendChild(fragment)
 
 
-def save_grid_code_to_file(game_manager: GameManager) -> None:
+def lock_visual_cells() -> None:
+    """Lock the cells occupied by the current block visually."""
+    cells = game_manager.current_block.get_cells()
+    for cell in cells:
+        cell.className = "locked-cell"
+
+
+def save_grid_code_to_file() -> None:
     """Open a save dialog to save the current grid code as a file."""
     saved_code = game_manager.format_grid_as_text()
 
