@@ -27,6 +27,10 @@ def lock_visual_cells() -> None:
     for cell in cells:
         cell.className = "locked-cell"
 
+    # Focus the input field
+    input_box = document.getElementById("text-input")
+    input_box.focus()
+
 
 def save_grid_code_to_file() -> None:
     """Open a save dialog to save the current grid code as a file."""

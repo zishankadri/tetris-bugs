@@ -26,9 +26,6 @@ def handle_key(evt: KeyboardEvent, game_manager: GameManager) -> None:
         game_manager.current_block.lock(game_manager.grid)
         game_manager.current_block = None
         moved = True
-        # Focus the input field
-        input_box = document.getElementById("text-input")
-        input_box.focus()
     if moved:
         game_manager.render()
 
