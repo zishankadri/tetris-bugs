@@ -1,4 +1,4 @@
-from typing import tuple
+from typing import Tuple  # noqa: UP035
 
 from controls import handle_input, handle_key
 from game import GameManager
@@ -30,7 +30,7 @@ def main() -> None:
     continue_btn = document.getElementById("continue-btn")
     if continue_btn:
 
-        def on_continue(*_args: tuple) -> None:
+        def on_continue(*_args: Tuple) -> None:  # noqa: UP006
             continue_modal("modal-bg")  # hide modal
             start_timer()  # start the timer
 
