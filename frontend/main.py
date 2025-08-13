@@ -1,3 +1,4 @@
+from timer import start_timer
 from controls import handle_input, handle_key
 from game import GameManager
 from js import document, setInterval, window
@@ -23,9 +24,14 @@ def main() -> None:
     save_proxy = create_proxy(lambda *_: save_grid_code_to_file(game_manager))
     save_btn.addEventListener("click", save_proxy)
 
-    # Bind continue modal button
+    # Bind continue modal button and start timer
     continue_btn = document.getElementById("continue-btn")
-    continue_proxy = create_proxy(lambda *_: continue_modal("modal-bg"))
+    if continue_btn:
+        def on_continue(*args):
+            continue_modal("modal-bg")  # hide modal
+            start_timer()                # start the timer
+
+    continue_proxy = create_proxy(on_continue)
     continue_btn.addEventListener("click", continue_proxy)
 
     # Bind keyboard event inside the game manager
