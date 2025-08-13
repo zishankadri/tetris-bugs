@@ -38,15 +38,13 @@ class GameManager(metaclass=SingletonMeta):  # noqa: D101
 
                 if current_char != last_char:
                     if current_char is None:
-                        cell.classList.remove("block", "locked")
+                        cell.className = "cell"
                         cell.style.background = ""
                         cell.style.color = ""
                         cell.textContent = ""
                     else:
-                        cell.classList.add("block")
+                        cell.className = "block"
                         cell.textContent = current_char
-                        cell.style.background = "lime"
-                        cell.style.color = "black"
 
                 self._last_rendered_grid[y][x] = current_char
 
