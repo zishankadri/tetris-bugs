@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING
 
-from standard import SingletonMeta
+from patterns import SingletonMeta
 
 if TYPE_CHECKING:
     from objects.block import Block
