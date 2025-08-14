@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING
 from standard import SingletonMeta
 
 if TYPE_CHECKING:
-    from block import Block
+    from objects.block import Block
 
 
 class GameManager(metaclass=SingletonMeta):  # noqa: D101

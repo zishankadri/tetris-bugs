@@ -75,8 +75,13 @@
 
   </div>
 
+    <py-script>
+      import sys
+      sys.modules.pop("main_v2", None)
+    </py-script>
+
     <!-- PyScript -->
-    <script type="py" src="./main.py?v=1" config="config.json"></script>
+    <script type="py" src="main.py?nocache={{ Date.now() }}" config="config.json"></script>
 
   <!-- Loading Screen JS -->
   <script>

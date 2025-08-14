@@ -1,7 +1,7 @@
-from block import Block
 from constants import MAX_BLOCK_LENGTH
 from game import game_manager
 from js import HTMLInputElement, KeyboardEvent, document
+from objects.block import Block
 
 
 def handle_key(evt: KeyboardEvent) -> None:
