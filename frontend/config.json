@@ -6,8 +6,8 @@
     "./src/modal.py": "",
     "./src/standard.py": "",
     "./src/ui_helpers.py": "",
-    "./src/assets/block.py": "",
-    "./src/assets/bugs.py": "",
+    "./src/objects/block.py": "",
+    "./src/objects/bugs.py": "",
     "./src/timer.py": ""
   }
 }

@@ -1,7 +1,7 @@
 from typing import Tuple  # noqa: UP035
 
 from controls import handle_input, handle_key
-from game import GameManager
+from game import game_manager
 from js import document, setInterval, window
 from modal import continue_modal
 
@@ -13,12 +13,11 @@ from ui_helpers import create_visual_grid, save_grid_code_to_file
 
 def main() -> None:
     """Initialize the game."""
-    game_manager = GameManager()
     create_visual_grid()  # Create display grid
 
     # Bind events
     input_box = document.getElementById("text-input")
-    input_proxy = create_proxy(lambda evt: handle_input(evt, input_box, game_manager))
+    input_proxy = create_proxy(lambda evt: handle_input(evt, input_box))
     input_box.addEventListener("keydown", input_proxy)
 
     # Bind save button
@@ -38,7 +37,7 @@ def main() -> None:
     continue_btn.addEventListener("click", continue_proxy)
 
     # Bind keyboard event inside the game manager
-    handle_key_proxy = create_proxy(lambda evt: handle_key(evt, game_manager))
+    handle_key_proxy = create_proxy(lambda evt: handle_key(evt))
     window.addEventListener("keydown", handle_key_proxy)
 
     tick_proxy = create_proxy(lambda *_: game_manager.tick())

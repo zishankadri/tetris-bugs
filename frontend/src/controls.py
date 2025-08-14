@@ -1,10 +1,10 @@
 from block import Block
 from constants import MAX_BLOCK_LENGTH
-from game import GameManager
+from game import game_manager
 from js import HTMLInputElement, KeyboardEvent, document
 
 
-def handle_key(evt: KeyboardEvent, game_manager: GameManager) -> None:
+def handle_key(evt: KeyboardEvent) -> None:
     """Handle arrow keys and spacebar."""
     # Ignore input if typing in text box
     active = document.activeElement
@@ -30,7 +30,7 @@ def handle_key(evt: KeyboardEvent, game_manager: GameManager) -> None:
         game_manager.render()
 
 
-def handle_input(evt: KeyboardEvent, input_box: HTMLInputElement, game_manager: GameManager) -> None:
+def handle_input(evt: KeyboardEvent, input_box: HTMLInputElement) -> None:
     """Spawn a new block when Enter is pressed."""
     # Only allow new block if none is falling
     if game_manager.current_block and game_manager.current_block.falling:
