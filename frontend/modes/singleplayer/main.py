@@ -1,37 +1,26 @@
 from typing import Tuple  # noqa: UP035
 
-from controls import handle_input, handle_key
+from controls import handle_key
 from game import game_manager
 from js import document, setInterval, window
-from modal import continue_modal
+from modal import close_modal
 
 # pyright: reportMissingImports=false
 from pyodide.ffi import create_proxy
 from timer import start_timer
-from ui_helpers import create_visual_grid, save_grid_code_to_file
+from ui_helpers import create_visual_grid
 
 
 def main() -> None:
     """Initialize the game."""
     create_visual_grid()  # Create display grid
 
-    # Bind events
-    input_box = document.getElementById("text-input")
-    input_proxy = create_proxy(lambda evt: handle_input(evt, input_box))
-    input_box.addEventListener("keydown", input_proxy)
-
-    # Bind save button
-    save_btn = document.getElementById("save-btn")
-    save_proxy = create_proxy(lambda *_: save_grid_code_to_file())
-    save_btn.addEventListener("click", save_proxy)
-
     # Bind continue modal button and start timer
     continue_btn = document.getElementById("continue-btn")
-    if continue_btn:
 
-        def on_continue(*_args: Tuple) -> None:  # noqa: UP006
-            continue_modal("modal-bg")  # hide modal
-            start_timer()  # start the timer
+    def on_continue(*_args: Tuple) -> None:  # noqa: UP006
+        close_modal("modal-bg")  # hide modal
+        start_timer()  # start the timer
 
     continue_proxy = create_proxy(on_continue)
     continue_btn.addEventListener("click", continue_proxy)
