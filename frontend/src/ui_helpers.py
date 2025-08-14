@@ -22,7 +22,7 @@ def create_visual_grid() -> None:
 
 
 def lock_visual_cells() -> None:
-    """Lock the cells occupied by the current block visually."""
+    """Lock the cells occupied by the current block visually and focus the input."""
     cells = game_manager.current_block.get_cells()
     for cell in cells:
         cell.className = "locked-cell"
