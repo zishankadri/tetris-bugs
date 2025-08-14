@@ -28,14 +28,16 @@ class GameManager(metaclass=SingletonMeta):  # noqa: D101
                 ty = self.current_block.y
                 if 0 <= tx < self.cols and 0 <= ty < self.rows:
                     combined_grid[ty][tx] = ch
-
+            block_locked_flag = False
+        else:
+            # When block exists but, is not falling indicates that the block is locked
+            block_locked_flag = True
         # Update only changed cells
         for y in range(self.rows):
             for x in range(self.cols):
                 cell = self.cells[y][x]
                 current_char = combined_grid[y][x]
                 last_char = self._last_rendered_grid[y][x]
-
                 if current_char != last_char:
                     if current_char is None:
                         cell.className = "cell"
@@ -45,7 +47,8 @@ class GameManager(metaclass=SingletonMeta):  # noqa: D101
                     else:
                         cell.className = "block"
                         cell.textContent = current_char
-
+                if block_locked_flag and cell.style.background == "lime":
+                    cell.className = "locked-cell"
                 self._last_rendered_grid[y][x] = current_char
 
     def tick(self) -> None:
