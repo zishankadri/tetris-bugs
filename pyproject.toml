@@ -3,14 +3,22 @@ name = "code-jam-template"
 version = "0.1.0"
 description = "Add your description here"
 authors = [
-    { name = "Zishan Kadri" },
-    { name = "Shivam Khetan" }
+    "Zishan Kadri",
+    "Shivam Khetan"
 ]
 readme = "README.md"
+packages = [
+    { include = "backend" },
+    { include = "frontend" }
+]
+
+[tool.poetry.scripts]
+start = "backend.run:main"
 
 [tool.poetry.dependencies]
 python = "^3.13"
 pyscript = "^0.3.3"
+flask = "^3.1.1"
 pre-commit = "^4.3.0"
 
 [tool.poetry.group.dev.dependencies]
