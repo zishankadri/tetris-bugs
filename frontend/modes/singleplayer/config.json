@@ -7,7 +7,6 @@
     "./src/patterns.py": "",
     "./src/ui_helpers.py": "",
     "./src/block.py": "",
-    "./src/timer.py": "",
     "./src/block_generator.py": ""
   }
 }
