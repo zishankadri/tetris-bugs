@@ -1,4 +1,5 @@
 from block import Block
+from block_generator import block_generator
 from js import HTMLElement  # PyScript exposes js.HTMLElement
 from patterns import SingletonMeta
 
@@ -53,9 +54,7 @@ class GameManager(metaclass=SingletonMeta):  # noqa: D101
         # Try to move block down
         if not self.current_block.move(0, 1, self.grid):
             # If can't move down, lock block and clear current_block
-            self.current_block.lock(self.grid)
-            self.lock_visual_cells()
-            self.current_block = None
+            self.lock_current_block()
         self.render()
 
     def format_grid_as_text(self) -> str:
@@ -74,6 +73,16 @@ class GameManager(metaclass=SingletonMeta):  # noqa: D101
         game_manager.current_block = new_block
         game_manager.render()
 
+    def spawn_next_block(self) -> None:
+        """Generate and spawn the next block."""
+        demo_program = """from collections.abc import Generator
+        x = 10
+        y = 20
+        print(x + y)"""
+
+        block = block_generator(demo_program)
+        self.spawn_block(next(block))
+
     def get_block_cells(self) -> list[HTMLElement]:
         """Return DOM elements corresponding to the current block."""
         if not self.current_block:
@@ -86,6 +95,12 @@ class GameManager(metaclass=SingletonMeta):  # noqa: D101
         for cord in cords:
             cell = self.cells[cord[1]][cord[0]]
             cell.className = "locked-cell"
+
+    def lock_current_block(self) -> None:
+        """Lock current block logic."""
+        self.current_block.lock(game_manager.grid)
+        self.lock_visual_cells()
+        self.current_block = None
 
 
 game_manager = GameManager()

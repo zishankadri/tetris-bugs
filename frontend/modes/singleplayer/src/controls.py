@@ -21,8 +21,7 @@ def handle_key(evt: KeyboardEvent) -> None:
         moved = game_manager.current_block.move(0, 1, game_manager.grid)
     elif evt.key == " ":
         evt.preventDefault()
-        game_manager.current_block.lock(game_manager.grid)
-        game_manager.current_block = None
+        game_manager.lock_current_block()
         moved = True
     if moved:
         game_manager.render()
