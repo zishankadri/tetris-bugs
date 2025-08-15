@@ -1,8 +1,9 @@
 from typing import Tuple  # noqa: UP035
 
+from block_generator import block_generator
 from controls import handle_key
 from game import game_manager
-from js import document, setInterval, window
+from js import console, document, setInterval, window
 from modal import close_modal
 
 # pyright: reportMissingImports=false
@@ -29,8 +30,17 @@ def main() -> None:
     handle_key_proxy = create_proxy(lambda evt: handle_key(evt))
     window.addEventListener("keydown", handle_key_proxy)
 
+    demo_program = """from collections.abc import Generator
+    x = 10
+    y = 20
+    print(x + y)"""
+
     tick_proxy = create_proxy(lambda *_: game_manager.tick())
     setInterval(tick_proxy, 500)
+
+    block = block_generator(demo_program)
+    console.log("next: ", block)
+    game_manager.spawn_block(next(block))
 
     game_manager.render()
 

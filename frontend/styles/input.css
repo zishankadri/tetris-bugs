@@ -35,7 +35,7 @@
 }
 
 .block {
-  @apply font-mono bg-brand text-black text-center;
+  @apply font-mono bg-brand text-black flex items-center justify-center;
 }
 
 .cell {
