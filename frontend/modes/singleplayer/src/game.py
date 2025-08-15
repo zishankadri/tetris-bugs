@@ -1,106 +1,59 @@
 from block import Block
-from block_generator import block_generator
-from js import HTMLElement  # PyScript exposes js.HTMLElement
 from patterns import SingletonMeta
 
 
-class GameManager(metaclass=SingletonMeta):  # noqa: D101
+class GameManager(metaclass=SingletonMeta):
+    """Game logic manager."""
+
     def __init__(self) -> None:
-        # Grid size
         self.cols, self.rows = 40, 20
-        self.grid = [[None for _ in range(self.cols)] for _ in range(self.rows)]
+        self.grid: list[list[str | None]] = [[None for _ in range(self.cols)] for _ in range(self.rows)]
         self.current_block: Block | None = None
-        self.cells = []
-
-        # Keep track of last rendered state to minimize DOM updates
-        self._last_rendered_grid = [[None for _ in range(self.cols)] for _ in range(self.rows)]
-
-    def render(self) -> None:
-        """Render grid and current block efficiently by updating only changed cells."""
-        # Copy current grid state including current_block overlay
-        combined_grid = [row.copy() for row in self.grid]
-
-        if self.current_block and self.current_block.falling:
-            for i, ch in enumerate(self.current_block.text):
-                tx = self.current_block.x + i
-                ty = self.current_block.y
-                if 0 <= tx < self.cols and 0 <= ty < self.rows:
-                    combined_grid[ty][tx] = ch
-
-        # Update only changed cells
-        for y in range(self.rows):
-            for x in range(self.cols):
-                cell = self.cells[y][x]
-                current_char = combined_grid[y][x]
-                last_char = self._last_rendered_grid[y][x]
-
-                if current_char != last_char:
-                    if current_char is None:
-                        cell.className = "cell"
-                        cell.style.background = ""
-                        cell.style.color = ""
-                        cell.textContent = ""
-                    else:
-                        cell.className = "block"
-                        cell.textContent = current_char
-
-                self._last_rendered_grid[y][x] = current_char
+        self.block_gen = None
+        self.renderer = None
 
     def tick(self) -> None:
         """Advance game state by one step."""
         if not self.current_block or not self.current_block.falling:
             return
 
-        # Try to move block down
         if not self.current_block.move(0, 1, self.grid):
-            # If can't move down, lock block and clear current_block
             self.lock_current_block()
-        self.render()
-
-    def format_grid_as_text(self) -> str:
-        """Format the grid as a text representation."""
-        lines = []
-        for row in self.grid:
-            line = "".join(cell if cell is not None else " " for cell in row)
-            # Only add non-empty lines
-            if line.strip():
-                lines.append(line)
-        return "\n".join(lines) if lines else ""
-
-    def spawn_block(self, text: str) -> None:
-        """Spawn a block in the frontend."""
-        new_block = Block(text, game_manager.cols, game_manager.rows)
-        game_manager.current_block = new_block
-        game_manager.render()
 
     def spawn_next_block(self) -> None:
         """Generate and spawn the next block."""
-        demo_program = """from collections.abc import Generator
-        x = 10
-        y = 20
-        print(x + y)"""
-
-        block = block_generator(demo_program)
-        self.spawn_block(next(block))
-
-    def get_block_cells(self) -> list[HTMLElement]:
-        """Return DOM elements corresponding to the current block."""
-        if not self.current_block:
-            return []
-        return [self.cells[y][x] for x, y in self.current_block.get_cells_coords()]
-
-    def lock_visual_cells(self) -> None:
-        """Lock the cells occupied by the current block visually and focus the input."""
-        cords = self.current_block.get_cells_coords()
-        for cord in cords:
-            cell = self.cells[cord[1]][cord[0]]
-            cell.className = "locked-cell"
+        new_block = Block(next(self.block_gen), self.cols, self.rows)
+        self.current_block = new_block
 
     def lock_current_block(self) -> None:
-        """Lock current block logic."""
-        self.current_block.lock(game_manager.grid)
-        self.lock_visual_cells()
+        """Lock current block into grid."""
+        self.current_block.lock(self.grid)
         self.current_block = None
+        self.spawn_next_block()
+
+    def format_grid_as_text(self) -> str:
+        """Return grid contents as plain text."""
+        lines = [
+            "".join(cell if cell else " " for cell in row)
+            for row in self.grid
+            if any(cell is not None for cell in row)
+        ]
+        return "\n".join(lines) if lines else ""
+
+    def format_grid_line_as_text(self, i: int) -> str:
+        """Return the i-th line of the grid as text."""
+        row = self.grid[i]
+        return "".join(cell if cell else " " for cell in row).rstrip()
+
+    def clear_row(self, row_index: int) -> None:
+        """Clear all cells in the specified row in the internal grid.
+
+        Note:
+            This only updates the game state; visual updates should be handled
+            separately by the renderer.
+
+        """
+        self.grid[row_index] = [None for _ in range(self.cols)]
 
 
 game_manager = GameManager()

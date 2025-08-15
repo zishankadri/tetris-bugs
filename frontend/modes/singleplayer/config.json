@@ -5,8 +5,9 @@
     "./src/game.py": "",
     "./src/modal.py": "",
     "./src/patterns.py": "",
-    "./src/ui_helpers.py": "",
+    "./src/ui_renderer.py": "",
     "./src/block.py": "",
     "./src/block_generator.py": ""
+
   }
 }
