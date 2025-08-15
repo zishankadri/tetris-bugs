@@ -1,44 +1,96 @@
-This project uses **PyScript** to run Python in the browser, with **Tailwind CSS** for styling.
-## Requirements
+# Tetris Bugs
 
-- Python 3
-- Node.js & npm (for building Tailwind CSS)
+A fun browser-based **Tetris with a twist**, making the game unpredictable and exciting!  
+Built with a **Flask backend** and **PyScript + TailwindCSS frontend**.
 
-## Setup
+---
 
-1. Go to the frontend folder
-```
+## 🚀 Features
+
+- **Flask backend** (`backend/`) – serves game assets and API routes.
+- **PyScript frontend** (`frontend/`) – game logic written in Python, runs in the browser.
+- **TailwindCSS** – modern CSS framework for styling.
+- **Poetry** – for Python dependency management.
+- **Ruff** – for linting and formatting.
+- Single `poetry run start` command to run backend and frontend together.
+
+---
+
+## 📦 Requirements
+
+- Python 3.13+
+- [Poetry](https://python-poetry.org/)
+- Node.js & npm
+
+---
+
+## ⚙️ Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/your-username/tetris-bugs.git
+cd tetris-bugs
+
+# Install Python dependencies
+poetry install
+
+# Install frontend dependencies
 cd frontend
-```
-
-2. Install Tailwind dependencies:
-
-```
 npm install
+cd ..
 ```
 
-3. Build Tailwind CSS:
+---
 
-```
-npm run build
-```
+## ▶️ Development
 
-4. Start development server (Python):
-```
-python -m http.server
-```
+Start both backend and frontend in one command:
 
-Then open `http://localhost:8000` in your browser.
-
-Optional (for contributors only):
-
-```
-npm run dev
+```bash
+poetry run start
 ```
 
-This updates your CSS automatically while you work.
+Backend runs at:  
+```
+http://127.0.0.1:5000
+```
 
-## Notes
+Frontend assets are served from `frontend/dist`.
 
-- Tailwind CSS is used for styling only.
-- PyScript runs Python directly in the browser.
+---
+
+## 📁 Project Structure
+
+```
+tetris-bugs/
+│   README.md
+│   pyproject.toml
+│   poetry.lock
+│
+├── backend/        # Flask backend
+│   ├── app.py
+│   └── ...
+│
+└── frontend/       # PyScript + Tailwind frontend
+    ├── src/        # Python game code
+    ├── styles/     # TailwindCSS input
+    ├── dist/       # Compiled output
+    └── index.html
+```
+
+---
+
+## 🛠 Linting & Formatting
+
+```bash
+# Run Ruff to check code style
+poetry run ruff check .
+
+# Run Ruff and automatically fix issues
+poetry run ruff check . --fix
+
+# Run pre-commit hooks on all files
+poetry run pre-commit run --all-files
+```
+
+---

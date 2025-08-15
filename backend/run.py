@@ -7,6 +7,7 @@ from flask.cli import main as flask_main
 
 DEFAULT_ARG_COUNT = 2  # Avoid magic number
 
+
 def main() -> None:
     """Run the Flask application and start the frontend development server."""
     frontend_dir = Path(__file__).parent.parent / "frontend"

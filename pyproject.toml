@@ -3,8 +3,8 @@ name = "code-jam-template"
 version = "0.1.0"
 description = "Add your description here"
 authors = [
-    { name = "Zishan Kadri" },
-    { name = "Shivam Khetan" }
+    "Zishan Kadri",
+    "Shivam Khetan"
 ]
 readme = "README.md"
 packages = [
