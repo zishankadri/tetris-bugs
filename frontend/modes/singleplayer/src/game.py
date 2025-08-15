@@ -54,8 +54,8 @@ class GameManager(metaclass=SingletonMeta):  # noqa: D101
         if not self.current_block.move(0, 1, self.grid):
             # If can't move down, lock block and clear current_block
             self.current_block.lock(self.grid)
-            self.current_block = None
             self.lock_visual_cells()
+            self.current_block = None
         self.render()
 
     def format_grid_as_text(self) -> str:
@@ -82,8 +82,9 @@ class GameManager(metaclass=SingletonMeta):  # noqa: D101
 
     def lock_visual_cells(self) -> None:
         """Lock the cells occupied by the current block visually and focus the input."""
-        cells = self.current_block.get_cells()
-        for cell in cells:
+        cords = self.current_block.get_cells_coords()
+        for cord in cords:
+            cell = self.cells[cord[1]][cord[0]]
             cell.className = "locked-cell"
 
 
