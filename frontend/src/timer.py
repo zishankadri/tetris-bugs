@@ -4,19 +4,24 @@ from pyodide.ffi import create_proxy
 
 time_left = TIMER_MINUTES * 60
 interval_id = None
+timer_proxy = None
 
 
 def run_timer() -> None:
-    """Run the timer."""
+    """Update the timer once per second."""
     global time_left, interval_id  # noqa: PLW0603
+
+    # Always update display
     timer_element = document.getElementById("timer")
-    if not timer_element:
+    if timer_element:
+        m, s = divmod(time_left, 60)
+        timer_element.textContent = f"{m:02d}:{s:02d}"
+
+    # If paused, stop ticking
+    if not document.getElementById("pause-screen").hidden:
         return
 
-    minutes = time_left // 60
-    seconds = time_left % 60
-    timer_element.textContent = f"{minutes:02d}:{seconds:02d}"
-
+    # Countdown
     time_left -= 1
     if time_left < 0:
         clearInterval(interval_id)
@@ -24,9 +29,28 @@ def run_timer() -> None:
 
 
 def start_timer() -> None:
-    """Start the timer."""
-    global interval_id  # noqa: PLW0603
-    if interval_id is None:
-        run_timer()
+    """Start or restart from full time."""
+    global time_left, interval_id, timer_proxy  # noqa: PLW0603
+    time_left = TIMER_MINUTES * 60
+    if timer_proxy is None:
         timer_proxy = create_proxy(run_timer)
+    if interval_id is None:
+        run_timer()  # initial draw
         interval_id = setInterval(timer_proxy, 1000)
+
+
+def resume_timer() -> None:
+    """Resume after pause."""
+    global interval_id, timer_proxy  # noqa: PLW0603
+    if timer_proxy is None:
+        timer_proxy = create_proxy(run_timer)
+    if interval_id is None and document.getElementById("pause-screen").hidden:
+        interval_id = setInterval(timer_proxy, 1000)
+
+
+def pause_timer() -> None:
+    """Pause manually."""
+    global interval_id  # noqa: PLW0603
+    if interval_id is not None:
+        clearInterval(interval_id)
+        interval_id = None

@@ -6,6 +6,7 @@ from js import document, setInterval, window
 from modal import continue_modal
 
 # pyright: reportMissingImports=false
+from pause_screen import pause, resume
 from pyodide.ffi import create_proxy
 from timer import start_timer
 from ui_helpers import create_visual_grid, save_grid_code_to_file
@@ -26,6 +27,11 @@ def main() -> None:
     save_proxy = create_proxy(lambda *_: save_grid_code_to_file())
     save_btn.addEventListener("click", save_proxy)
 
+    # Bind pause button
+    pause_btn = document.getElementById("pause-button")
+    pause_proxy = create_proxy(lambda *_: pause())
+    pause_btn.addEventListener("click", pause_proxy)
+
     # Bind continue modal button and start timer
     continue_btn = document.getElementById("continue-btn")
     if continue_btn:
@@ -36,6 +42,16 @@ def main() -> None:
 
     continue_proxy = create_proxy(on_continue)
     continue_btn.addEventListener("click", continue_proxy)
+
+    # Bind resume game buttn
+    resume_btn = document.getElementById("resume-btn")
+    if resume_btn:
+
+        def on_resume(*_args: Tuple) -> None:  # noqa: UP006
+            resume()  # hide pause screen
+
+    resume_proxy = create_proxy(on_resume)
+    resume_btn.addEventListener("click", resume_proxy)
 
     # Bind keyboard event inside the game manager
     handle_key_proxy = create_proxy(lambda evt: handle_key(evt, game_manager))

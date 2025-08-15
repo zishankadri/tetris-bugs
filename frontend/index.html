@@ -39,12 +39,28 @@
         press Enter to spawn a block. <br>
         Use ⬅️ ➡️ to move, _Space_ to lock.
       </div>
-      <button id="continue-btn"
+      <button type="submit" id="continue-btn"
         class="retro-btn w-full mt-4">
         Continue
       </button>
     </div>
   </div>
+
+  <!--Pause Screen-->
+  <div id="pause-screen" class="fixed inset-0 bg-black/50 flex items-center justify-center z-[9999]" hidden>
+    <div class="bg-black text-brand border border-brand p-16 rounded-lg min-w-[250px] retro-shadow">
+      <div class="font-retro leading-8">
+        The Game is Paused
+      </div>
+      <button type="submit" id="resume-btn"
+        class="retro-btn w-full mt-4">
+        ▶ Resume
+      </button>
+    </div>
+  </div>
+
+  <!--Pause Button-->
+  <div ><button type="menu" id="pause-button" class="retro-btn w-auto inline-block mt-4 px-4 py-2">⏸ Pause</button></div>
 
   <!-- Top bar -->
   <div class="flex justify-center pt-4">
@@ -60,7 +76,7 @@
         class="px-2 py-1 text-white bg-[#111] border border-dashed border-gray-700 rounded" autofocus>
             <p id="timer"></p>
 
-      <button id="save-btn"
+      <button type="submit" id="save-btn"
         class="retro-btn text-xs">
         Export File
       </button>
