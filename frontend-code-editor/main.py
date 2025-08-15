@@ -7,7 +7,6 @@ from modal import continue_modal
 
 # pyright: reportMissingImports=false
 from pyodide.ffi import create_proxy
-from timer import start_timer
 from ui_helpers import create_visual_grid, save_grid_code_to_file
 
 
@@ -26,13 +25,12 @@ def main() -> None:
     save_proxy = create_proxy(lambda *_: save_grid_code_to_file())
     save_btn.addEventListener("click", save_proxy)
 
-    # Bind continue modal button and start timer
+    # Bind continue modal button
     continue_btn = document.getElementById("continue-btn")
     if continue_btn:
 
         def on_continue(*_args: Tuple) -> None:  # noqa: UP006
             continue_modal("modal-bg")  # hide modal
-            start_timer()  # start the timer
 
     continue_proxy = create_proxy(on_continue)
     continue_btn.addEventListener("click", continue_proxy)
