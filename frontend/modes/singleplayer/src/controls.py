@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from game import GameManager
-    from ui_renderer import GridRenderer
+    from ui_manager import UIManager
 
 from js import KeyboardEvent, document
 
@@ -14,13 +14,13 @@ class Controller:
 
     Attributes:
         game_manager (GameManager): The game state manager instance.
-        renderer (GridRenderer): The renderer responsible for updating the visual grid.
+        ui_manager (UIManager): The ui_manager responsible for updating the visual grid.
 
     """
 
-    def __init__(self, game_manager: GameManager, renderer: GridRenderer) -> None:
+    def __init__(self, game_manager: GameManager, ui_manager: UIManager) -> None:
         self.game_manager = game_manager
-        self.renderer = renderer
+        self.ui_manager = ui_manager
 
     def handle_key(self, evt: KeyboardEvent) -> None:
         """Handle arrow keys and spacebar."""
@@ -44,4 +44,4 @@ class Controller:
             moved = True
 
         if moved:
-            self.renderer.render()
+            self.ui_manager.render()

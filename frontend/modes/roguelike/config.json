@@ -5,7 +5,7 @@
     "./src/game.py": "",
     "./src/modal.py": "",
     "./src/patterns.py": "",
-    "./src/ui_renderer.py": "",
+    "./src/ui_manager.py": "",
     "./src/block.py": "",
 
     "./src/problem.py": "",

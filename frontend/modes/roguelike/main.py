@@ -3,16 +3,16 @@ from game import game_manager
 from js import document, setInterval, window
 from modal import continue_modal
 from pyodide.ffi import create_proxy
-from ui_renderer import GridRenderer
+from ui_manager import UIManager
 
 
 def main() -> None:
     """Initialize the game."""
-    renderer = GridRenderer(game_manager)
-    game_manager.renderer = renderer  # Inject renderer instance (dependency injection)
-    controller = Controller(game_manager, renderer)  # Inject game_manager and renderer instance
+    ui_manager = UIManager(game_manager)
+    game_manager.ui_manager = ui_manager  # Inject ui_manager instance (dependency injection)
+    controller = Controller(game_manager, ui_manager)  # Inject game_manager and ui_manager instance
 
-    renderer.create_visual_grid()  # Create display grid
+    ui_manager.create_visual_grid()  # Create display grid
 
     # Bind events
     input_box = document.getElementById("text-input")
@@ -21,22 +21,22 @@ def main() -> None:
 
     # Bind save button
     save_btn = document.getElementById("save-btn")
-    save_proxy = create_proxy(lambda *_: renderer.save_grid_code_to_file())
+    save_proxy = create_proxy(lambda *_: ui_manager.save_grid_code_to_file())
     save_btn.addEventListener("click", save_proxy)
 
     # Bind run button
     run_btn = document.getElementById("run-btn")
-    run_proxy = create_proxy(lambda *_: renderer.problem_switch())
+    run_proxy = create_proxy(lambda *_: ui_manager.problem_switch())
     run_btn.addEventListener("click", run_proxy)
 
     # Bind retry button
     retry_btn = document.getElementById("retry-btn")
-    retry_proxy = create_proxy(lambda *_: renderer.clear_grid())
+    retry_proxy = create_proxy(lambda *_: ui_manager.clear_grid())
     retry_btn.addEventListener("click", retry_proxy)
 
     # Bind restart button
     restart_btn = document.getElementById("restart-btn")
-    restart_proxy = create_proxy(lambda *_: renderer.restart_game())
+    restart_proxy = create_proxy(lambda *_: ui_manager.restart_game())
     restart_btn.addEventListener("click", restart_proxy)
 
     # Bind continue modal button and start timer
@@ -49,12 +49,12 @@ def main() -> None:
     handle_key_proxy = create_proxy(lambda evt: controller.handle_key(evt))
     window.addEventListener("keydown", handle_key_proxy)
 
-    tick_proxy = create_proxy(lambda *_: (game_manager.tick(), renderer.render()))
+    tick_proxy = create_proxy(lambda *_: (game_manager.tick(), ui_manager.render()))
     setInterval(tick_proxy, 500)
 
-    renderer.render()
-    renderer.show_problem()
-    renderer.update_score_display()
+    ui_manager.render()
+    ui_manager.show_problem()
+    ui_manager.update_score_display()
 
     # Hide loading screen once game is ready
     loading_screen = document.getElementById("loading-screen")

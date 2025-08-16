@@ -4,32 +4,32 @@ from game import game_manager
 from js import document, setInterval, window
 from modal import continue_modal
 from pyodide.ffi import create_proxy
-from ui_renderer import GridRenderer
+from ui_manager import UIManager
 
 
 def main() -> None:
     """Initialize the game."""
-    renderer = GridRenderer(game_manager)
-    game_manager.renderer = renderer  # Inject renderer instance (dependency injection)
-    controller = Controller(game_manager, renderer)  # Inject game_manager and renderer instance
-    game_manager.block_gen = block_generator(renderer)
+    ui_manager = UIManager(game_manager)
+    game_manager.ui_manager = ui_manager  # Inject ui_manager instance (dependency injection)
+    controller = Controller(game_manager, ui_manager)  # Inject game_manager and ui_manager instance
+    game_manager.block_gen = block_generator(ui_manager)
 
-    renderer.create_visual_grid()  # Create display grid
+    ui_manager.create_visual_grid()  # Create display grid
 
     # Bind continue modal button and start timer
     continue_btn = document.getElementById("continue-btn")
 
-    continue_proxy = create_proxy(lambda _evt: continue_modal("modal-bg", renderer))
+    continue_proxy = create_proxy(lambda _evt: continue_modal("modal-bg", ui_manager))
     continue_btn.addEventListener("click", continue_proxy)
 
     # Bind keyboard event inside the game manager
     handle_key_proxy = create_proxy(lambda evt: controller.handle_key(evt))
     window.addEventListener("keydown", handle_key_proxy)
 
-    tick_proxy = create_proxy(lambda *_: (game_manager.tick(), renderer.render()))
+    tick_proxy = create_proxy(lambda *_: (game_manager.tick(), ui_manager.render()))
     setInterval(tick_proxy, 500)
 
-    renderer.render()
+    ui_manager.render()
 
     # Hide loading screen once game is ready
     loading_screen = document.getElementById("loading-screen")

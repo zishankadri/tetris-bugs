@@ -8,7 +8,7 @@ if TYPE_CHECKING:
 from js import URL, Blob, console, document
 
 
-class GridRenderer:
+class UIManager:
     """Handles rendering and UI interactions for the game."""
 
     def __init__(self, game: GameManager) -> None:

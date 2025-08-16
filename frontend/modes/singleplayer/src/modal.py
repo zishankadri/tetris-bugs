@@ -3,7 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from ui_helpers import GridRenderer
+    from ui_manager import UIManager
 
 from game import game_manager
 from js import document
@@ -16,10 +16,10 @@ def close_modal(id: str) -> None:
         modal_bg.remove()
 
 
-def continue_modal(id: str, renderer: GridRenderer) -> None:
+def continue_modal(id: str, ui_manager: UIManager) -> None:
     """Close a modal and spawn the first block."""
     close_modal(id)
 
     # Spawn the first block
     game_manager.spawn_next_block()
-    renderer.render()
+    ui_manager.render()

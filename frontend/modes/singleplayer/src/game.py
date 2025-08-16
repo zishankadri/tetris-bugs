@@ -1,3 +1,10 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from ui_manager import UIManager
+
 from block import Block
 from patterns import SingletonMeta
 
@@ -10,7 +17,7 @@ class GameManager(metaclass=SingletonMeta):
         self.grid: list[list[str | None]] = [[None for _ in range(self.cols)] for _ in range(self.rows)]
         self.current_block: Block | None = None
         self.block_gen = None
-        self.renderer = None
+        self.ui_manager: UIManager = None
 
     def tick(self) -> None:
         """Advance game state by one step."""
@@ -50,7 +57,7 @@ class GameManager(metaclass=SingletonMeta):
 
         Note:
             This only updates the game state; visual updates should be handled
-            separately by the renderer.
+            separately by the ui_manager.
 
         """
         self.grid[row_index] = [None for _ in range(self.cols)]

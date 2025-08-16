@@ -9,7 +9,7 @@ class GameManager(metaclass=SingletonMeta):
         self.cols, self.rows = 40, 20
         self.grid: list[list[str | None]] = [[None for _ in range(self.cols)] for _ in range(self.rows)]
         self.current_block: Block | None = None
-        self.renderer = None
+        self.ui_manager = None
 
     def tick(self) -> None:
         """Advance game state by one step."""
@@ -22,7 +22,7 @@ class GameManager(metaclass=SingletonMeta):
     def lock_current_block(self) -> None:
         """Lock current block into grid."""
         self.current_block.lock(self.grid)
-        self.renderer.lock_visual_cells()
+        self.ui_manager.lock_visual_cells()
 
         self.current_block = None
 
@@ -45,7 +45,7 @@ class GameManager(metaclass=SingletonMeta):
 
         Note:
             This only updates the game state; visual updates should be handled
-            separately by the renderer.
+            separately by the ui_manager.
 
         """
         self.grid[row_index] = [None for _ in range(self.cols)]
@@ -55,7 +55,7 @@ class GameManager(metaclass=SingletonMeta):
         new_block = Block(text, self.cols, self.rows)
         self.current_block = new_block
 
-        self.renderer.render()
+        self.ui_manager.render()
 
 
 game_manager = GameManager()

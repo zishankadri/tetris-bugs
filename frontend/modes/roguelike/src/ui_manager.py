@@ -10,7 +10,7 @@ from problem import problem_manager
 from problem_helper import check_code, get_ques
 
 
-class GridRenderer:
+class UIManager:
     """Handles rendering and UI interactions for the game."""
 
     def __init__(self, game: GameManager) -> None:
