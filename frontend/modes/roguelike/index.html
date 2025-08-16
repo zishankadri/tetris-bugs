@@ -127,30 +127,6 @@
     <!-- PyScript -->
     <script type="py" src="./main.py?v=1" config="config.json"></script>
 
-  <!-- Loading Screen JS -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const checkPyScript = setInterval(function () {
-        if (window.pyodide && window.pyodide.isReady) {
-          clearInterval(checkPyScript);
-          hideLoadingScreen();
-        }
-      }, 100);
-
-      setTimeout(function () {
-        clearInterval(checkPyScript);
-        hideLoadingScreen();
-      }, 5000);
-    });
-
-    function hideLoadingScreen() {
-      const loadingScreen = document.getElementById('loading-screen');
-      if (loadingScreen) {
-        loadingScreen.classList.add('hidden');
-      }
-    }
-  </script>
-
 </body>
 
 </html>
