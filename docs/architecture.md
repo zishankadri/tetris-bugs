@@ -1,5 +1,7 @@
 # Project Architecture
 
+*(See ![Architecture Diagram](img/architecture-diagram.svg) for visual reference.)*
+
 **Goal:** Avoid circular imports, enable reuse across modes, separate concerns.
 
 ## Layers
@@ -19,5 +21,3 @@
 - `main` → composition root, no logic.
 
 Modes can add their own files, but they must follow the same rules.
-
-*(See ![Architecture Diagram](img/architecture-diagram.svg) for visual reference.)*
