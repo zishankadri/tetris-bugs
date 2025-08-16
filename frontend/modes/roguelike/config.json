@@ -1,16 +1,18 @@
 {
   "files": {
-    "./src/problems.json":"",
-    "./src/problem_helper.py":"",
-    "./src/problem.py":"",
     "./src/constants.py": "",
     "./src/controls.py": "",
     "./src/game.py": "",
     "./src/modal.py": "",
-    "./src/standard.py": "",
-    "./src/ui_helpers.py": "",
-    "./src/assets/block.py": "",
-    "./src/assets/bugs.py": "",
-    "./src/timer.py": ""
+    "./src/patterns.py": "",
+    "./src/ui_renderer.py": "",
+    "./src/block.py": "",
+
+    "./src/problem.py": "",
+    "./src/problem_helper.py": "",
+
+    "./src/problems.json":"",
+    "./src/timer.py":""
+
   }
 }
