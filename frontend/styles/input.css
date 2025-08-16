@@ -19,13 +19,13 @@
 }
 
 
-
 @theme {
   --animate-spin: spin 1s linear infinite;
   --color-brand: #11ce60; /* lime-500 by default */
   --font-mono: "JetBrains Mono", monospace;
   --font-retro: "Press Start 2P", system-ui;
   --shadow-retro: 4px 4px 0 #ff00ff, 8px 8px 0 #00ffff;
+  --shadow-retro-lg: 6px 6px 0 #ff00ff, 12px 12px 0 #00ffff;
 
   /* shadow-retro Animations */
   --shadow-retro-small: 1px 1px 0 #ff00ff, 2px 2px 0 #00ffff;
@@ -77,6 +77,6 @@
 
 .retro-btn-secondary {
   @apply py-4 px-8 border-brand text-brand uppercase font-retro;
-  @apply cursor-pointer transition-all;
+  @apply cursor-pointer transition-all hover:bg-brand border hover:text-black;
   @apply hover:animate-retro-shadow
 }
