@@ -1,9 +1,11 @@
 from controls import Controller
-from game import game_manager
 from js import document, setInterval, window
 from modal import continue_modal
 from pyodide.ffi import create_proxy
+from shared.game import BaseGameManager
 from ui_manager import UIManager
+
+game_manager = BaseGameManager()
 
 
 def main() -> None:
@@ -14,7 +16,7 @@ def main() -> None:
 
     ui_manager.create_visual_grid()  # Create display grid
 
-    # Bind events
+    # Bind text-input
     input_box = document.getElementById("text-input")
     input_proxy = create_proxy(lambda evt: controller.handle_input(evt, input_box))
     input_box.addEventListener("keydown", input_proxy)
@@ -40,8 +42,8 @@ def main() -> None:
     restart_btn.addEventListener("click", restart_proxy)
 
     # Bind continue modal button and start timer
-    continue_btn = document.getElementById("continue-btn")
 
+    continue_btn = document.getElementById("continue-btn")
     continue_proxy = create_proxy(lambda _evt: continue_modal("modal-bg"))
     continue_btn.addEventListener("click", continue_proxy)
 
@@ -52,6 +54,7 @@ def main() -> None:
     tick_proxy = create_proxy(lambda *_: (game_manager.tick(), ui_manager.render()))
     setInterval(tick_proxy, 500)
 
+    # Kick start
     ui_manager.render()
     ui_manager.show_problem()
     ui_manager.update_score_display()

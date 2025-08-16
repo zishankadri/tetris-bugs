@@ -3,10 +3,10 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from ui_manager import UIManager
+    from shared.ui_manager import BaseUIManager
 
-from block import Block
-from patterns import SingletonMeta
+from shared.block import Block
+from shared.patterns import SingletonMeta
 
 
 class BaseGameManager(metaclass=SingletonMeta):
@@ -16,7 +16,7 @@ class BaseGameManager(metaclass=SingletonMeta):
         self.cols, self.rows = 40, 20
         self.grid: list[list[str | None]] = [[None for _ in range(self.cols)] for _ in range(self.rows)]
         self.current_block: Block | None = None
-        self.ui_manager: UIManager = None
+        self.ui_manager: BaseUIManager = None
 
     def tick(self) -> None:
         """Advance game state by one step."""
@@ -26,14 +26,18 @@ class BaseGameManager(metaclass=SingletonMeta):
         if not self.current_block.move(0, 1, self.grid):
             self.lock_current_block()
 
-    def spawn_block(self) -> None:
+    def spawn_block(self, text: str) -> None:
         """Create and spawn a new block."""
-        new_block = Block(next(self.block_gen), self.cols, self.rows)
+        new_block = Block(text, self.cols, self.rows)
         self.current_block = new_block
+
+        self.ui_manager.render()
 
     def lock_current_block(self) -> None:
         """Lock current block into grid."""
         self.current_block.lock(self.grid)
+        self.ui_manager.lock_visual_cells()
+
         self.current_block = None
 
     def format_grid_as_text(self) -> str:
@@ -58,8 +62,8 @@ class BaseGameManager(metaclass=SingletonMeta):
             separately by the ui_manager.
 
         """
-        self.game.current_block = None
-        self.game.grid = [[None for _ in range(self.game.cols)] for _ in range(self.game.rows)]
+        self.current_block = None
+        self.grid = [[None for _ in range(self.cols)] for _ in range(self.rows)]
 
     def clear_row(self, row_index: int) -> None:
         """Clear all cells in the specified row in the internal grid.

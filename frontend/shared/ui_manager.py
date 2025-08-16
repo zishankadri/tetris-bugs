@@ -4,11 +4,11 @@ from datetime import UTC, datetime
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from game import GameManager
+    from shared.game import GameManager
 from js import URL, Blob, console, document
 
 
-class UIManager:
+class BaseUIManager:
     """Handles rendering and UI interactions for the game."""
 
     def __init__(self, game: GameManager) -> None:

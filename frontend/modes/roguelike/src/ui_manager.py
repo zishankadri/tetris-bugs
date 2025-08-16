@@ -1,104 +1,18 @@
 from __future__ import annotations
 
-from datetime import UTC, datetime
-from typing import TYPE_CHECKING
-
-if TYPE_CHECKING:
-    from game import GameManager
-from js import URL, Blob, document, localStorage
+from js import document, localStorage
 from problem import problem_manager
 from problem_helper import check_code, get_ques
+from shared.ui_manager import BaseUIManager
 
 
-class UIManager:
+class UIManager(BaseUIManager):
     """Handles rendering and UI interactions for the game."""
 
-    def __init__(self, game: GameManager) -> None:
-        self.game = game
-        self.cells: list[list] = []
-        self._last_rendered_grid: list[list[str | None]] = [[None for _ in range(game.cols)] for _ in range(game.rows)]
-
-    def create_visual_grid(self) -> None:
-        """Create the visual grid in DOM."""
-        game_div = document.getElementById("game")
-        fragment = document.createDocumentFragment()
-
-        for _y in range(self.game.rows):
-            row = []
-            for _x in range(self.game.cols):
-                cell = document.createElement("div")
-                cell.classList.add("cell")
-                fragment.appendChild(cell)
-                row.append(cell)
-            self.cells.append(row)
-
-        game_div.appendChild(fragment)
-
-    def render(self) -> None:
-        """Update only cells that have changed to match the current game state."""
-        combined_grid = [row.copy() for row in self.game.grid]
-
-        if self.game.current_block and self.game.current_block.falling:
-            for i, ch in enumerate(self.game.current_block.text):
-                tx = self.game.current_block.x + i
-                ty = self.game.current_block.y
-                if 0 <= tx < self.game.cols and 0 <= ty < self.game.rows:
-                    combined_grid[ty][tx] = ch
-
-        for y in range(self.game.rows):
-            for x in range(self.game.cols):
-                cell = self.cells[y][x]
-                current_char = combined_grid[y][x]
-                last_char = self._last_rendered_grid[y][x]
-
-                if current_char != last_char:
-                    if current_char is None:
-                        cell.className = "cell"
-                        cell.style.background = ""
-                        cell.style.color = ""
-                        cell.textContent = ""
-                    else:
-                        cell.className = "block"
-                        cell.textContent = current_char
-
-                self._last_rendered_grid[y][x] = current_char
-
-    def save_grid_code_to_file(self) -> None:
-        """Prompt user to download current grid code."""
-        saved_code = self.game.format_grid_as_text()
-
-        blob = Blob.new([saved_code], {"type": "text/x-python"})
-        url = URL.createObjectURL(blob)
-
-        download_link = document.createElement("a")
-        download_link.href = url
-
-        timestamp = datetime.now(UTC).strftime("%Y-%m-%d_%H-%M-%S")
-        download_link.download = f"tetris_code_{timestamp}.py"
-        download_link.style.display = "none"
-
-        document.body.appendChild(download_link)
-        download_link.click()
-        document.body.removeChild(download_link)
-
-        URL.revokeObjectURL(url)
-
-    # TODO: Refactor this method before abstraction
-    def clear_grid(self) -> None:
+    def clear_grid(self, *args, **kwargs) -> None:  # noqa: ANN002, ANN003
         """Clear the grid by resetting all cells to None."""
-        self.game.current_block = None
-        self.game.grid = [[None for _ in range(self.game.cols)] for _ in range(self.game.rows)]
-        self._last_rendered_grid = [[None for _ in range(self.game.cols)] for _ in range(self.game.rows)]
+        super().clear_grid(*args, **kwargs)
 
-        # Force clear all visual cells to ensure locked cells are reset
-        for y in range(self.game.rows):
-            for x in range(self.game.cols):
-                cell = self.cells[y][x]
-                cell.className = "cell"
-                cell.style.background = ""
-                cell.style.color = ""
-                cell.textContent = ""
-        self.render()
         # Clear the code output
         output = document.getElementById("code-output")
         if output:
@@ -109,22 +23,15 @@ class UIManager:
             input_box.focus()
         self.update_score_display()
 
-    # TODO: Refactor this method before abstraction
-    def lock_visual_cells(self) -> None:
+    def lock_visual_cells(self, *args, **kwargs) -> None:  # noqa: ANN002, ANN003
         """Lock the cells occupied by the current block visually."""
-        block_cords = self.game.current_block.get_cells_coords()
-
-        block_cells = [self.cells[cord[1]][cord[0]] for cord in block_cords]
-
-        for cell in block_cells:
-            cell.className = "locked-cell"
+        super().lock_visual_cells(*args, **kwargs)
 
         # Focus the input field
         input_box = document.getElementById("text-input")
         input_box.focus()
 
-    # Mode-specific
-    # TODO: Everything above will be abstracted in the next refactor
+    # Mode-specific methods
 
     def show_problem(self) -> None:
         """Show and update problem."""

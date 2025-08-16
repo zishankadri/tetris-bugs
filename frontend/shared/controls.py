@@ -3,13 +3,13 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from game import GameManager
-    from ui_manager import UIManager
+    from shared.game import GameManager
+    from shared.ui_manager import UIManager
 
 from js import KeyboardEvent, document
 
 
-class Controller:
+class BaseController:
     """Handles user input and mediates interactions between the game state and the UI.
 
     Attributes:
