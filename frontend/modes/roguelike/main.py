@@ -5,7 +5,7 @@ from pyodide.ffi import create_proxy
 from shared.game import BaseGameManager
 from ui_manager import UIManager
 
-game_manager = BaseGameManager()
+game_manager = BaseGameManager(40, 25)
 
 
 def main() -> None:

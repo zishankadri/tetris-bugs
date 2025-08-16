@@ -5,7 +5,7 @@
     "../../shared/controls.py": "shared/controls.py",
     "../../shared/ui_manager.py": "shared/ui_manager.py",
     "../../shared/constants.py": "shared/constants.py",
-    "../../shared/objects/block.py": "shared/block.py",
+    "../../shared/objects/block.py": "shared/objects/block.py",
 
     "./src/controls.py": "",
     "./src/ui_manager.py": "",

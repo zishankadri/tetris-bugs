@@ -5,15 +5,15 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from shared.ui_manager import BaseUIManager
 
-from shared.block import Block
+from shared.objects.block import Block
 from shared.patterns import SingletonMeta
 
 
 class BaseGameManager(metaclass=SingletonMeta):
     """Game logic manager."""
 
-    def __init__(self) -> None:
-        self.cols, self.rows = 40, 20
+    def __init__(self, cols: int, rows: int) -> None:
+        self.cols, self.rows = cols, rows
         self.grid: list[list[str | None]] = [[None for _ in range(self.cols)] for _ in range(self.rows)]
         self.current_block: Block | None = None
         self.ui_manager: BaseUIManager = None

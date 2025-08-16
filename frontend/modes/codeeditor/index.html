@@ -10,7 +10,7 @@
   <script type="module" src="https://pyscript.net/releases/2025.8.1/core.js"></script>
 
   <!-- TailwindCSS -->
-  <link rel="stylesheet" href="../../dist/styles/output.css?v=3">
+  <link rel="stylesheet" href="../../dist/output.css?v=3">
 
   <!-- Retro font -->
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
@@ -58,7 +58,8 @@
     <div class="flex justify-between items-center w-[839px] mt-5">
       <input type="text" id="text-input" maxlength="4" placeholder="Type code"
         class="px-2 py-1 text-white bg-[#111] border border-dashed border-gray-700 rounded" autofocus>
-            <p id="timer"></p>
+
+      <p id="timer"></p>
 
       <button id="save-btn"
         class="retro-btn text-xs">
@@ -82,30 +83,6 @@
 
     <!-- PyScript -->
     <script type="py" src="main.py?nocache={{ Date.now() }}" config="config.json"></script>
-
-  <!-- Loading Screen JS -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const checkPyScript = setInterval(function () {
-        if (window.pyodide && window.pyodide.isReady) {
-          clearInterval(checkPyScript);
-          hideLoadingScreen();
-        }
-      }, 100);
-
-      setTimeout(function () {
-        clearInterval(checkPyScript);
-        hideLoadingScreen();
-      }, 5000);
-    });
-
-    function hideLoadingScreen() {
-      const loadingScreen = document.getElementById('loading-screen');
-      if (loadingScreen) {
-        loadingScreen.classList.add('hidden');
-      }
-    }
-  </script>
 
 </body>
 
