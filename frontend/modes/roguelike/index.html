@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Code Editor - Tetris</title>
+
+  <link rel="stylesheet" href="https://pyscript.net/releases/2025.8.1/core.css">
+  <script type="module" src="https://pyscript.net/releases/2025.8.1/core.js"></script>
+
+  <!-- TailwindCSS -->
+  <link rel="stylesheet" href="dist/styles/output.css?v=3">
+
+  <!-- Retro font -->
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+
+
+</head>
+
+<body class="bg-[#111] text-brand flex flex-col h-screen w-full">
+
+  <!-- Loading Screen -->
+  <div id="loading-screen" class="fixed inset-0 bg-[#111] flex items-center justify-center z-[10000]">
+    <div class="bg-black border-2 border-brand p-12 rounded-lg text-center min-w-[300px] retro-shadow">
+      <h1 class="font-retro text-brand mb-5">Tetris Bugs</h1>
+      <div class="w-12 h-12 border-4 border-gray-800 border-t-brand rounded-full mx-auto animate-spin"></div>
+
+      <p class="font-retro mt-5 text-brand">Loading...</p>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div id="modal-bg" class="fixed inset-0 bg-black/50 flex items-center justify-center z-[9999]">
+    <div class="bg-black text-brand border border-brand p-16 rounded-lg min-w-[250px] retro-shadow">
+      <div class="font-retro leading-8">
+        Type max 4 characters. <br>
+        press Enter to spawn a block. <br>
+        Use ⬅️ ➡️ to move, _Space_ to lock.
+      </div>
+      <button id="continue-btn"
+        class="retro-btn w-full mt-4">
+        Continue
+      </button>
+    </div>
+  </div>
+
+  <!-- Game Over Modal -->
+  <div id="game-over-modal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-[9999] hidden">
+    <div class="bg-black text-brand border border-brand p-16 rounded-lg min-w-[300px] retro-shadow">
+      <div class="font-retro text-center">
+        <h2 class="text-2xl mb-4">Game Over!</h2>
+        <p class="mb-2">Problems Solved: <span id="problems-solved">0</span></p>
+        <p class="mb-4">High Score: <span id="high-score">0</span></p>
+        <button id="restart-btn"
+          class="retro-btn w-full">
+          Play Again
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header Section -->
+  <div class="flex flex-col items-center pt-6 pb-4">
+    <!-- Score Display -->
+    <div class="font-retro text-center">
+      <p class="text-brand text-sm">
+        Current Score: <span id="current-score" class="text-white">0</span> |
+        High Score: <span id="current-high-score" class="text-white">0</span>
+      </p>
+    </div>
+  </div>
+
+  <!-- Main Content Area - Horizontal Layout -->
+  <div class="flex flex-1 w-full px-6 gap-8">
+    <!-- Left Side - Problem Information -->
+    <div class="flex flex-col w-1/3 min-w-[300px]">
+      <!-- Problem Section -->
+      <div class="text-left mb-6">
+        <h2 id="problem-title" class="font-retro text-brand text-lg mb-3 problem-title"></h2>
+        <p id="problem-desc" class="font-retro text-gray-300 text-sm leading-relaxed problem-desc"></p>
+      </div>
+
+      <!-- Text Bar -->
+      <div class="flex flex-col gap-4 font-retro mb-6">
+        <div class="flex items-center gap-4">
+          <input type="text" id="text-input" maxlength="4" placeholder="Type code"
+            class="px-2 py-1 text-white bg-[#111] border border-dashed border-gray-700 rounded flex-1" autofocus>
+        </div>
+        <div class="flex items-center gap-4">
+          <button id="save-btn"
+            class="retro-btn text-xs w-fit">
+            Export File
+          </button>
+          <p id="timer" class="text-white text-sm whitespace-nowrap"></p>
+        </div>
+      </div>
+
+      <!-- Code Output and Buttons -->
+      <div class="font-retro text-left mt-8">
+        <div class="mb-4" id="code-output"></div>
+        <div class="flex gap-4">
+          <button id="run-btn"
+              class="retro-btn">
+              Run Code
+            </button>
+          <button id="retry-btn"
+              class="retro-btn">
+              Retry
+            </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Side - Game Grid -->
+    <div class="flex flex-col items-center justify-center flex-1">
+      <!-- Grid -->
+      <div id="game"
+          class="grid gap-1 bg-red-400 border border-brand-500 retro-shadow"
+          style="grid-template-columns: repeat(40, 20px); grid-template-rows: repeat(20, 20px); gap:1px; background:#222;">
+      <!-- Cells will be populated by PyScript -->
+      </div>
+    </div>
+  </div>
+
+    <!-- PyScript -->
+    <script type="py" src="./main.py?v=1" config="config.json"></script>
+
+  <!-- Loading Screen JS -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const checkPyScript = setInterval(function () {
+        if (window.pyodide && window.pyodide.isReady) {
+          clearInterval(checkPyScript);
+          hideLoadingScreen();
+        }
+      }, 100);
+
+      setTimeout(function () {
+        clearInterval(checkPyScript);
+        hideLoadingScreen();
+      }, 5000);
+    });
+
+    function hideLoadingScreen() {
+      const loadingScreen = document.getElementById('loading-screen');
+      if (loadingScreen) {
+        loadingScreen.classList.add('hidden');
+      }
+    }
+  </script>
+
+</body>
+
+</html>
