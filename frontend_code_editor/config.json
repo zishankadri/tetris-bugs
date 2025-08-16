@@ -8,6 +8,7 @@
     "./src/ui_helpers.py": "",
     "./src/assets/block.py": "",
     "./src/assets/bugs.py": "",
-    "./src/timer.py": ""
+    "./src/timer.py": "",
+    "./src/execute_code.py": ""
   }
 }

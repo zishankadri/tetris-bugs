@@ -1,6 +1,7 @@
 from typing import Tuple  # noqa: UP035
 
 from controls import handle_input, handle_key
+from execute_code import run_python_code
 from game import GameManager
 from js import document, setInterval, window
 from modal import continue_modal
@@ -19,6 +20,11 @@ def main() -> None:
     input_box = document.getElementById("text-input")
     input_proxy = create_proxy(lambda evt: handle_input(evt, input_box, game_manager))
     input_box.addEventListener("keydown", input_proxy)
+
+    # Bind save button
+    run_btn = document.getElementById("runCodeButton")
+    run_proxy = create_proxy(lambda *_: run_python_code())
+    run_btn.addEventListener("click", run_proxy)
 
     # Bind save button
     save_btn = document.getElementById("save-btn")
