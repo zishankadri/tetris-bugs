@@ -5,6 +5,9 @@ from shared.constants import TIMER_MINUTES
 time_left = TIMER_MINUTES * 60
 interval_id = None
 
+# Callback to be called when timer runs out
+on_time_up = None
+
 
 def run_timer() -> None:
     """Run the timer."""
@@ -21,6 +24,8 @@ def run_timer() -> None:
     if time_left < 0:
         clearInterval(interval_id)
         interval_id = None
+        if on_time_up is not None:
+            on_time_up()
 
 
 def start_timer() -> None:
@@ -30,3 +35,12 @@ def start_timer() -> None:
         run_timer()
         timer_proxy = create_proxy(run_timer)
         interval_id = setInterval(timer_proxy, 1000)
+
+
+def reset_timer() -> None:
+    """Reset the timer to full duration."""
+    global time_left, interval_id  # noqa: PLW0603
+    time_left = TIMER_MINUTES * 60
+    if interval_id is not None:
+        clearInterval(interval_id)
+        interval_id = None

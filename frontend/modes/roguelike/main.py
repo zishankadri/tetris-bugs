@@ -1,3 +1,4 @@
+import timer
 from controls import Controller
 from js import document, setInterval, window
 from modal import continue_modal
@@ -15,6 +16,9 @@ def main() -> None:
     controller = Controller(game_manager, ui_manager)  # Inject game_manager and ui_manager instance
 
     ui_manager.create_visual_grid()  # Create display grid
+
+    # Set timer callback for game over
+    timer.on_time_up = ui_manager.show_game_over
 
     # Bind text-input
     input_box = document.getElementById("text-input")
