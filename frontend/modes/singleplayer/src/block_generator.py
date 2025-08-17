@@ -1,8 +1,16 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from collections.abc import Generator
+
+    from shared.ui_manager import BaseUIManager
+
+
 import random
-from collections.abc import Generator
 
 from game import game_manager
-from js import console
 
 demo_program = """from collections.abc import Generator
 x = 10
@@ -15,16 +23,16 @@ def split_into_blocks(s: str, block_size: int = 5) -> list[str]:
     return [s[i : i + block_size] for i in range(0, len(s), block_size)]
 
 
-def block_generator(renderer: str) -> Generator[str]:
+def block_generator(ui_manager: BaseUIManager) -> Generator[str]:
     """Yield blocks of a program string from bottom to top for gameplay.
 
     Each line of the program is split into mostly 5-character blocks,
     and blocks are yielded in random order. After yielding a line's
     blocks, the generator checks the corresponding player's line:
-    if it matches, the row is cleared from both the game state and renderer.
+    if it matches, the row is cleared from both the game state and ui_manager.
 
     Args:
-        renderer (str): The GridRenderer instance used to update the visual grid.
+        ui_manager (BaseUIManager): The BaseUIManager instance used to update the visual grid.
 
     Yields:
         str: Individual blocks of code from the program string, in random order.
@@ -49,7 +57,6 @@ def block_generator(renderer: str) -> Generator[str]:
         while len(blocks):
             rand_j = random.randint(0, len(blocks) - 1)  # noqa: S311
             yield blocks[rand_j]
-            console.log(len(blocks[rand_j]))
             blocks.pop(rand_j)
 
         player_line = game_manager.format_grid_line_as_text(-(bottom_pointer))
@@ -57,7 +64,7 @@ def block_generator(renderer: str) -> Generator[str]:
         if player_line.strip() == line.strip():
             # Clear the row if correctly answered
             game_manager.clear_row(-(bottom_pointer))
-            renderer.clear_row(-(bottom_pointer))
+            ui_manager.clear_row(-(bottom_pointer))
         else:
             # Incorrect answer
             # Increment the pointer, as the current row will stay stuck
