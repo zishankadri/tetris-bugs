@@ -3,6 +3,7 @@ from collections.abc import Generator
 
 from game import game_manager
 from js import console
+from shared.problem_helper import get_ques
 
 demo_program = """from collections.abc import Generator
 x = 10
@@ -40,7 +41,9 @@ def block_generator(renderer: str) -> Generator[str]:
                 return n - i
         return 1  # fallback if no empty row
 
-    lines = demo_program.splitlines()
+    question_id = random.randint(1,28)  # noqa: S311
+    question_details = get_ques(question_id)
+    lines = question_details["solution_code"]
     bottom_pointer = 1
 
     for line in reversed(lines):

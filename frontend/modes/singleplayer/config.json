@@ -5,6 +5,8 @@
     "../../shared/controls.py": "shared/controls.py",
     "../../shared/ui_manager.py": "shared/ui_manager.py",
     "../../shared/constants.py": "shared/constants.py",
+    "../../shared/problem_helper.py": "shared/problem_helper.py",
+    "../../shared/problems.json": "shared/problems.json",
     "../../shared/objects/block.py": "shared/objects/block.py",
 
     "./src/game.py": "",
