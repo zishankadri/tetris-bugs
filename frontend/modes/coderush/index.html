@@ -226,15 +226,16 @@
           bgmOn = !bgmOn;
           if (bgmOn) {
             bgmToggle.textContent = 'MUSIC ON';
-            bgmToggle.classList.add('bg-brand');
-            bgmToggle.style.color = 'black';
+            bgmToggle.classList.add('retro-btn');
+            bgmToggle.classList.remove('retro-btn-secondary');
 
 
             window.resumeBGM();
           } else {
             bgmToggle.textContent = 'MUSIC OFF';
-            bgmToggle.classList.remove('bg-brand');
-            bgmToggle.style.color = 'brand';
+            bgmToggle.classList.remove('retro-btn');
+            bgmToggle.classList.add('retro-btn-secondary');
+
             window.pauseBGM();
           }
         });
