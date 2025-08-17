@@ -97,29 +97,30 @@
 
     <!-- Right Side - Game Grid -->
     <div id="wrapper" class="flex flex-col items-center flex-1">
-      <!-- Text Bar -->
+      <!-- Header Bar -->
       <div class="flex justify-between gap-4 font-retro mb-6 w-[839px]">
 
-        <div class="flex items-center gap-4">
-
-          <!-- Text Input -->
-          <input type="text" id="text-input" maxlength="5" placeholder="Type code"
-            class="px-2 py-3 text-white bg-[#111] border border-dashed border-gray-700 rounded flex-1" autofocus>
-
-        </div>
+        <!-- Text Input -->
+        <input type="text" id="text-input" maxlength="5" placeholder="Type code"
+          class="px-2 py-3 text-white bg-[#111] border border-dashed border-gray-700 rounded flex-1" autofocus>
 
         <p
           id="timer"
-          class="border p-3 whitespace-nowrap text-brand border-brand">
+          class="border flex justify-center items-center p-3 whitespace-nowrap text-brand border-brand">
         </p>
-        <button id="save-btn"
-          class="retro-btn-secondary text-xs w-fit">
+        <div class="flex gap-4">
+          <button id="save-btn"
+          class="retro-btn-secondary text-xs w-fit inline-block">
           Export File
-        </button>
-        <button id="bgm-toggle"
-          class="retro-btn-secondary text-xs w-fit">
+          </button>
+
+          <button id="bgm-toggle"
+          class="retro-btn-secondary text-xs w-fit inline-block">
           MUSIC ON
+
         </button>
+
+      </div>
       </div>
 
       <!-- Grid -->
