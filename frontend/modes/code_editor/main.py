@@ -2,15 +2,15 @@ from typing import Tuple  # noqa: UP035
 
 from controls import Controller
 from execute_code import run_python_code
+from game import GameManager
 from js import document, setInterval, window
 from modal import continue_modal
 
 # pyright: reportMissingImports=false
 from pyodide.ffi import create_proxy
-from shared.game import BaseGameManager
 from ui_manager import UIManager
 
-game_manager = BaseGameManager(40, 20)
+game_manager = GameManager(40, 20)
 
 
 def main() -> None:
@@ -38,10 +38,21 @@ def main() -> None:
     save_btn.addEventListener("click", save_proxy)
     save_btn2.addEventListener("click", save_proxy)
 
+    # MENU BUTTONS
     # Bind new-file button
     new_file = document.getElementById("new-file")
     new_file_proxy = create_proxy(lambda *_: ui_manager.clear_grid())
     new_file.addEventListener("click", new_file_proxy)
+
+    # Bind undo button
+    undo = document.getElementById("undo")
+    undo_proxy = create_proxy(lambda *_: game_manager.undo())
+    undo.addEventListener("click", undo_proxy)
+
+    # Bind redo button
+    redo = document.getElementById("redo")
+    redo_proxy = create_proxy(lambda *_: game_manager.redo())
+    redo.addEventListener("click", redo_proxy)
 
     # Bind continue modal button
     continue_btn = document.getElementById("continue-btn")

@@ -8,6 +8,7 @@
     "../../shared/objects/block.py": "shared/objects/block.py",
 
     "./src/controls.py": "",
+    "./src/game.py": "",
     "./src/modal.py": "",
     "./src/ui_manager.py": "",
     "./src/timer.py": "",
