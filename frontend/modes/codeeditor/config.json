@@ -1,0 +1,14 @@
+{
+  "files": {
+    "../../shared/constants.py": "",
+    "./game.py": "",
+    "./modal.py": "",
+    "./patterns.py": "",
+    "./ui_helpers.py": "",
+    "./objects/block.py": "./objects/block.py",
+    "./objects/bugs.py": "",
+    "./timer.py": "",
+
+    "./controls.py": ""
+  }
+}
