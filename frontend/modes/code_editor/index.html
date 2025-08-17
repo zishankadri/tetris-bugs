@@ -107,6 +107,34 @@
     }
   </script>
 
+  <!-- Button Click Sound Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Create audio element for button sound
+      const buttonSound = new Audio('../../shared/audio/button.wav');
+      buttonSound.volume = 0.5; // Set volume to 50%
+
+      // Function to play button sound
+      function playButtonSound() {
+        // Reset audio to beginning and play
+        buttonSound.currentTime = 0;
+        buttonSound.play().catch(e => console.log('Button sound play failed:', e));
+      }
+
+      // Add click event listener to all buttons
+      document.addEventListener('click', function(event) {
+        // Check if the clicked element is a button or has button-like classes
+        if (event.target.tagName === 'BUTTON' ||
+            event.target.tagName === 'A' ||
+            event.target.classList.contains('retro-btn') ||
+            event.target.classList.contains('retro-btn-secondary') ||
+            event.target.closest('.retro-btn') ||
+            event.target.closest('.retro-btn-secondary')) {
+          playButtonSound();
+        }
+      });
+    });
+  </script>
 </body>
 
 </html>
