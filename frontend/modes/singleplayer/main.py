@@ -1,17 +1,17 @@
 from block_generator import block_generator
-from controls import Controller
 from game import game_manager
 from js import document, setInterval, window
 from modal import continue_modal
 from pyodide.ffi import create_proxy
-from ui_manager import UIManager
+from shared.controls import BaseController
+from shared.ui_manager import BaseUIManager
 
 
 def main() -> None:
     """Initialize the game."""
-    ui_manager = UIManager(game_manager)
+    ui_manager = BaseUIManager(game_manager)
     game_manager.ui_manager = ui_manager  # Inject ui_manager instance (dependency injection)
-    controller = Controller(game_manager, ui_manager)  # Inject game_manager and ui_manager instance
+    controller = BaseController(game_manager, ui_manager)  # Inject game_manager and ui_manager instance
     game_manager.block_gen = block_generator(ui_manager)
 
     ui_manager.create_visual_grid()  # Create display grid

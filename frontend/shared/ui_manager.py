@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from shared.game import GameManager
-from js import URL, Blob, console, document
+from js import URL, Blob, document
 
 
 class BaseUIManager:
@@ -115,12 +115,9 @@ class BaseUIManager:
         # Clear the internal grid data
         self.game.clear_row(row_index)
 
-        console.log("row_index")
-        console.log(row_index)
         # Clear the visual cells
         for x in range(self.game.cols):
             cell = self.cells[row_index][x]
-            console.log(cell.textContent)
 
             cell.className = "cell"
             cell.style.background = ""
