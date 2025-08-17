@@ -1,13 +1,15 @@
 {
   "files": {
-    "./src/constants.py": "",
+    "../../shared/game.py": "shared/game.py",
+    "../../shared/patterns.py": "shared/patterns.py",
+    "../../shared/controls.py": "shared/controls.py",
+    "../../shared/ui_manager.py": "shared/ui_manager.py",
+    "../../shared/constants.py": "shared/constants.py",
+    "../../shared/objects/block.py": "shared/objects/block.py",
+
     "./src/controls.py": "",
-    "./src/game.py": "",
     "./src/modal.py": "",
-    "./src/standard.py": "",
-    "./src/ui_helpers.py": "",
-    "./src/assets/block.py": "",
-    "./src/assets/bugs.py": "",
+    "./src/ui_manager.py": "",
     "./src/timer.py": "",
     "./src/execute_code.py": ""
   }
