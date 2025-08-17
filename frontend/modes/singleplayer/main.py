@@ -10,15 +10,14 @@ from shared.ui_manager import BaseUIManager
 def main() -> None:
     """Initialize the game."""
     ui_manager = BaseUIManager(game_manager)
-    game_manager.ui_manager = ui_manager  # Inject ui_manager instance (dependency injection)
-    controller = BaseController(game_manager, ui_manager)  # Inject game_manager and ui_manager instance
+    game_manager.ui_manager = ui_manager
+    controller = BaseController(game_manager, ui_manager)
     game_manager.block_gen = block_generator(ui_manager)
 
-    ui_manager.create_visual_grid()  # Create display grid
+    ui_manager.create_visual_grid()
 
     # Bind continue modal button and start timer
     continue_btn = document.getElementById("continue-btn")
-
     continue_proxy = create_proxy(lambda _evt: continue_modal("modal-bg", ui_manager))
     continue_btn.addEventListener("click", continue_proxy)
 

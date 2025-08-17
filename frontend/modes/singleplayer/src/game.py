@@ -12,7 +12,6 @@ from shared.game import BaseGameManager
 
 
 class GameManager(BaseGameManager):
-    # class GameManager(metaclass=SingletonMeta):
     """Game logic manager."""
 
     def __init__(self, *args: int, **kwargs: int) -> None:
