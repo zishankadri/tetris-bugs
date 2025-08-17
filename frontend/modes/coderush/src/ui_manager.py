@@ -3,7 +3,7 @@ from __future__ import annotations
 from js import document, localStorage, window
 from problem import problem_manager
 from problem_helper import check_code, get_ques
-from shared.audio_utils import play_place_sound
+from shared.audio_utils import play_place_sound, win_sound
 from shared.ui_manager import BaseUIManager
 
 
@@ -85,6 +85,7 @@ class UIManager(BaseUIManager):
                 localStorage.setItem("tetris_high_score", str(current_score))
             self.update_score_display()
             self.clear_grid()
+            win_sound()
             output.innerText = "Correct!"
         elif check_code(code, problem_manager.problem_id) == "wrong code":
             # Play wrong answer sound

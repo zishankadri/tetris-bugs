@@ -1,6 +1,5 @@
 from js import document
 from problem_helper import get_ques
-from shared.audio_utils import win_sound
 from shared.patterns import SingletonMeta
 
 
@@ -29,7 +28,6 @@ class Problem(metaclass=SingletonMeta):  # noqa: D101
             self.problem_title = "Winner!"
             self.problem_desc = "You beat the game!"
             self.render()
-            win_sound()
 
 
 problem_manager = Problem()
