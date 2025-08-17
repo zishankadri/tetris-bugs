@@ -156,6 +156,10 @@
     document.addEventListener('DOMContentLoaded', function() {
       // Create audio element for button sound
 
+      const bgm = document.getElementById('bgm');
+      if (bgm) {
+        bgm.volume = 0.3; // Set volume to 30%
+      }
       const buttonSound = new Audio('../../shared/audio/button.wav');
       buttonSound.volume = 0.5; // Set volume to 50%
 
