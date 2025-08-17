@@ -42,7 +42,7 @@ def check_code(code: str, id: int) -> str:  # noqa: C901
 def get_ques(id: int) -> dict:
     """Get ques from json file."""
     try:
-        with open(r"problems.json") as f:  # noqa: PTH123
+        with open(r"shared/problems.json") as f:  # noqa: PTH123
             return json.loads(f.read())[id - 1]
     except IndexError:
         return {}
