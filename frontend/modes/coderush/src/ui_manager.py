@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from js import document, localStorage
+from js import document, localStorage, window
 from problem import problem_manager
 from problem_helper import check_code, get_ques
 from shared.ui_manager import BaseUIManager
@@ -83,12 +83,21 @@ class UIManager(BaseUIManager):
             self.clear_grid()
             output.innerText = "Correct!"
         elif check_code(code, problem_manager.problem_id) == "wrong code":
+            # Play wrong answer sound
+            if hasattr(window, "playWrongAnswerSound"):
+                window.playWrongAnswerSound()
             output.innerText = "Incorrect Code, try again"
 
         elif check_code(code, problem_manager.problem_id) == "incorrect function":
+            # Play wrong answer sound
+            if hasattr(window, "playWrongAnswerSound"):
+                window.playWrongAnswerSound()
             output.innerText = "Check your function name"
 
         else:
+            # Play wrong answer sound for any other incorrect result
+            if hasattr(window, "playWrongAnswerSound"):
+                window.playWrongAnswerSound()
             output.innerText = check_code(code, problem_manager.problem_id)
 
     def show_game_over(self) -> None:

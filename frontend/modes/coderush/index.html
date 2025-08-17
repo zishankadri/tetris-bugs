@@ -35,9 +35,9 @@
   <div id="modal-bg" class="fixed inset-0 bg-black/50 flex items-center justify-center z-[9999]">
     <div class="bg-black text-brand border border-brand p-16 rounded-lg min-w-[250px]">
       <div class="font-retro leading-8">
-        Type max 4 characters. <br>
+        Type max 5 characters. <br>
         press Enter to spawn a block. <br>
-        Use ⬅️ ➡️ to move, _Space_ to lock.
+        Use ⬅️⬇️➡️ to move, <b>SPACE</b> to lock.
       </div>
       <button id="continue-btn"
         class="retro-btn w-full mt-4">
@@ -116,6 +116,10 @@
           class="retro-btn-secondary text-xs w-fit">
           Export File
         </button>
+        <button id="bgm-toggle"
+          class="retro-btn-secondary text-xs w-fit">
+          MUSIC ON
+        </button>
       </div>
 
       <!-- Grid -->
@@ -129,8 +133,16 @@
 
     </div>
   </div>
-  <audio id="bgm" autoplay loop volume="0.5" class="hidden">
+  <audio id="bgm" loop volume="0.5" class="hidden">
     <source src="../../shared/audio/retro.mp3" type="audio/mpeg">
+  </audio>
+
+  <audio id="game-over-sound" preload="auto" class="hidden">
+    <source src="../../shared/audio/game-over-wolarado.wav" type="audio/wav">
+  </audio>
+
+  <audio id="wrong-answer-sound" preload="auto" class="hidden">
+    <source src="../../shared/audio/wrong-ans.wav" type="audio/wav">
   </audio>
 
 
@@ -142,6 +154,7 @@
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       // Create audio element for button sound
+
       const buttonSound = new Audio('../../shared/audio/button.wav');
       buttonSound.volume = 0.5; // Set volume to 50%
 
@@ -150,6 +163,81 @@
         // Reset audio to beginning and play
         buttonSound.currentTime = 0;
         buttonSound.play().catch(e => console.log('Button sound play failed:', e));
+      }
+
+      // Function to play game over sound
+      function playGameOverSound() {
+        const gameOverSound = document.getElementById('game-over-sound');
+        if (gameOverSound) {
+          gameOverSound.currentTime = 0;
+          gameOverSound.volume = 0.7; // Set volume to 70%
+          gameOverSound.play().catch(e => console.log('Game over sound play failed:', e));
+        }
+      }
+
+      // Function to play wrong answer sound
+      function playWrongAnswerSound() {
+        const wrongAnswerSound = document.getElementById('wrong-answer-sound');
+        if (wrongAnswerSound) {
+          wrongAnswerSound.currentTime = 0;
+          wrongAnswerSound.volume = 0.6; // Set volume to 60%
+          wrongAnswerSound.play().catch(e => console.log('Wrong answer sound play failed:', e));
+        }
+      }
+
+      // Make wrong answer sound function globally available for Python to call
+      window.playWrongAnswerSound = playWrongAnswerSound;
+
+      // Make BGM control functions globally available
+      window.startBGM = startBGM;
+      window.pauseBGM = function() {
+        const bgm = document.getElementById('bgm');
+        if (bgm) {
+          bgm.pause();
+        }
+      };
+      window.resumeBGM = function() {
+        const bgm = document.getElementById('bgm');
+        if (bgm) {
+          bgm.play().catch(e => console.log('BGM resume failed:', e));
+        }
+      };
+
+      // Start BGM on first user interaction
+      function startBGM() {
+        const bgm = document.getElementById('bgm');
+        if (bgm) {
+          bgm.play().catch(e => console.log('BGM play failed:', e));
+        }
+        // Remove event listeners after first interaction
+        document.removeEventListener('click', startBGM);
+        document.removeEventListener('keydown', startBGM);
+      }
+
+      // Add event listeners for first user interaction
+      document.addEventListener('click', startBGM);
+      document.addEventListener('keydown', startBGM);
+
+      // Handle BGM toggle button
+      const bgmToggle = document.getElementById('bgm-toggle');
+      if (bgmToggle) {
+        let bgmOn = true;
+        bgmToggle.addEventListener('click', function() {
+          bgmOn = !bgmOn;
+          if (bgmOn) {
+            bgmToggle.textContent = 'MUSIC ON';
+            bgmToggle.classList.add('bg-brand');
+            bgmToggle.style.color = 'black';
+
+
+            window.resumeBGM();
+          } else {
+            bgmToggle.textContent = 'MUSIC OFF';
+            bgmToggle.classList.remove('bg-brand');
+            bgmToggle.style.color = 'brand';
+            window.pauseBGM();
+          }
+        });
       }
 
       // Add click event listener to all buttons
@@ -164,6 +252,33 @@
           playButtonSound();
         }
       });
+
+      // Monitor for game over modal to appear and play sound
+      const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+            const gameOverModal = document.getElementById('game-over-modal');
+            if (gameOverModal && !gameOverModal.classList.contains('hidden')) {
+              // Game over modal is now visible, play the sound
+              playGameOverSound();
+              window.pauseBGM();
+            }
+          }
+        });
+      });
+
+      const restartBtn = document.getElementById('restart-btn');
+      if (restartBtn) {
+        restartBtn.addEventListener('click', function() {
+          window.resumeBGM();
+        });
+      }
+
+      // Start observing the game over modal
+      const gameOverModal = document.getElementById('game-over-modal');
+      if (gameOverModal) {
+        observer.observe(gameOverModal, { attributes: true });
+      }
     });
   </script>
 </body>
