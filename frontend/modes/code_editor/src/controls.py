@@ -1,7 +1,7 @@
 from block import Block
 from constants import MAX_BLOCK_LENGTH
 from game import GameManager
-from js import HTMLInputElement, KeyboardEvent, document
+from js import HTMLInputElement, KeyboardEvent, console, document
 
 
 def handle_key(evt: KeyboardEvent, game_manager: GameManager) -> None:
@@ -39,6 +39,7 @@ def handle_input(evt: KeyboardEvent, input_box: HTMLInputElement, game_manager: 
     if evt.key == "Enter":
         text = input_box.value.strip()
         if 1 <= len(text) <= MAX_BLOCK_LENGTH:
+            console.log(len(text))
             new_block = Block(text, game_manager.cols, game_manager.rows)
             game_manager.current_block = new_block
             input_box.value = ""

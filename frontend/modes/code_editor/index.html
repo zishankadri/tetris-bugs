@@ -47,65 +47,81 @@
   </div>
 
   <!-- Top bar -->
-  <div class="flex justify-center pt-4">
-    <h1 class="font-retro text-brand text-lg">Tetris Bugs</h1>
+  <div class="w-full font-retro text-white px-4 py-2 flex text-xs items-center">
+    <!-- Files Menu -->
+    <div class="relative group">
+      <button class="px-3 py-1 hover:bg-gray-700">File</button>
+      <div
+        class="absolute left-0 mt-2 w-40 bg-gray-800 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition"
+      >
+        <button
+          py-click="perform_save_file"
+          class="block px-4 py-2 w-full hover:bg-gray-700">
+          Save File
+        </button>
+        <button
+          py-click="perform_save_file"
+          class="block px-4 py-2 w-full hover:bg-gray-700">
+          New File
+        </button>
+      </div>
+    </div>
+
+    <!-- Editor Menu -->
+    <div class="relative group">
+      <button class="px-3 py-1 hover:bg-gray-700">Edit</button>
+      <div
+        class="absolute left-0 mt-2 w-40 bg-gray-800 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition"
+      >
+        <a href="#" class="block px-4 py-2 hover:bg-gray-700">Undo</a>
+        <a href="#" class="block px-4 py-2 hover:bg-gray-700">Redo</a>
+      </div>
+    </div>
   </div>
 
-  <!-- Wrapper -->
-  <div id="wrapper" class="flex flex-col items-center justify-center flex-1 w-full">
+  <!-- Main Section -->
+  <div class="flex flex-1 justify-center gap-8 pt-4">
+    <!-- Wrapper -->
+    <div id="wrapper" class="flex flex-col items-center justify-center pl-4 flex-1 w-full">
 
-    <!-- Text Bar -->
-    <div class="flex justify-between items-center w-[839px] mt-5">
-      <input type="text" id="text-input" maxlength="4" placeholder="Type code"
-        class="px-2 py-1 text-white bg-[#111] border border-dashed border-gray-700 rounded" autofocus>
+      <!-- Text Bar -->
+      <div class="flex justify-between items-center font-retro w-[839px] mt-5">
+        <input type="text" id="text-input" maxlength="5" placeholder="Type code"
+          class="px-2 py-3 text-white bg-[#111] border border-dashed border-gray-700 rounded" autofocus>
 
-      <button type="submit" class="retro-btn text-xs" id="runCodeButton">Run Code</button>
-      <button type="submit" id="save-btn"
-        class="retro-btn text-xs">
-        Export File
-      </button>
-    </div>
-
-    <!-- Grid -->
-    <div id="game"
-        class="grid mt-5 mb-5 gap-1 bg-red-400 border border-brand-500 retro-shadow"
-        style="grid-template-columns: repeat(40, 20px); grid-template-rows: repeat(20, 20px); gap:1px; background:#222;">
-    <!-- Cells will be populated by PyScript -->
-    </div>
-
-    <div id="CodeOutput"
-        class="bg-green-950 m-6 bg-blend-darken retro-shadow overflow-y-auto pt-1 pl-1"
-        style="height: 100px; width: 800px;">
-        <div class="font-retro leading-3.5 font-light text-xs">
+          <div class="flex gap-4">
+            <button type="submit" class="retro-btn text-xs" id="runCodeButton">Run Code</button>
+            <button type="submit" id="save-btn"
+            class="retro-btn text-xs">
+            Export File
+          </button>
         </div>
+      </div>
+
+      <!-- Grid -->
+      <div id="game"
+          class="grid mt-5 gap-[1px] bg-[#222] text-xs border border-brand-500 retro-shadow"
+          style="
+            grid-template-columns: repeat(40, 20px);
+            grid-template-rows: repeat(20, 20px);
+          ">
+      <!-- Cells will be populated by PyScript -->
+      </div>
+
     </div>
+
+    <!-- class="bg-green-950 m-6 bg-blend-darken retro-shadow overflow-y-auto pt-1 pl-1" -->
+    <!-- <div> -->
+      <div id="CodeOutput"
+      class="bg-green-900/30 w-full font-retro p-4 overflow-y-auto">
+        <p class="font-retro">Terminal</p>
+      </div>
+    <!-- </div> -->
+
   </div>
     <!-- PyScript -->
     <script type="py" src="./main.py?v=1" config="config.json"></script>
 
-  <!-- Loading Screen JS -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const checkPyScript = setInterval(function () {
-        if (window.pyodide && window.pyodide.isReady) {
-          clearInterval(checkPyScript);
-          hideLoadingScreen();
-        }
-      }, 100);
-
-      setTimeout(function () {
-        clearInterval(checkPyScript);
-        hideLoadingScreen();
-      }, 5000);
-    });
-
-    function hideLoadingScreen() {
-      const loadingScreen = document.getElementById('loading-screen');
-      if (loadingScreen) {
-        loadingScreen.classList.add('hidden');
-      }
-    }
-  </script>
 
 </body>
 

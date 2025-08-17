@@ -3,12 +3,17 @@ from typing import Tuple  # noqa: UP035
 from controls import handle_input, handle_key
 from execute_code import run_python_code
 from game import GameManager
-from js import document, setInterval, window
+from js import Event, document, setInterval, window
 from modal import continue_modal
 
 # pyright: reportMissingImports=false
 from pyodide.ffi import create_proxy
 from ui_helpers import create_visual_grid, save_grid_code_to_file
+
+
+def perform_save_file(_evt: Event) -> None:
+    """Click handler that saves the current grid code to a file."""
+    save_grid_code_to_file()
 
 
 def main() -> None:
