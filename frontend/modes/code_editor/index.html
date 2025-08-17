@@ -15,8 +15,6 @@
   <!-- Retro font -->
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 
-
-
 </head>
 
 <body class="bg-[#111] text-brand flex flex-col h-screen w-full">
@@ -60,6 +58,7 @@
           Save File
         </button>
         <button
+          id="new-file"
           class="block px-4 py-2 w-full hover:bg-gray-700">
           New File
         </button>
@@ -110,12 +109,12 @@
     </div>
 
     <!-- class="bg-green-950 m-6 bg-blend-darken retro-shadow overflow-y-auto pt-1 pl-1" -->
-    <!-- <div> -->
+    <div class="w-full font-retro flex flex-col p-4">
+      <p class="font-retro">Terminal</p>
       <div id="CodeOutput"
-      class="bg-green-900/30 w-full font-retro p-4 overflow-y-auto">
-        <p class="font-retro">Terminal</p>
+      class="bg-green-900/30 p-4 overflow-y-auto flex-1">
       </div>
-    <!-- </div> -->
+    </div>
 
   </div>
     <!-- PyScript -->

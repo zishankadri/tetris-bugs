@@ -38,6 +38,11 @@ def main() -> None:
     save_btn.addEventListener("click", save_proxy)
     save_btn2.addEventListener("click", save_proxy)
 
+    # Bind new-file button
+    new_file = document.getElementById("new-file")
+    new_file_proxy = create_proxy(lambda *_: ui_manager.clear_grid())
+    new_file.addEventListener("click", new_file_proxy)
+
     # Bind continue modal button
     continue_btn = document.getElementById("continue-btn")
     if continue_btn:
