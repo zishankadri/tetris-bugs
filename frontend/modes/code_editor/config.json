@@ -1,0 +1,14 @@
+{
+  "files": {
+    "./src/constants.py": "",
+    "./src/controls.py": "",
+    "./src/game.py": "",
+    "./src/modal.py": "",
+    "./src/standard.py": "",
+    "./src/ui_helpers.py": "",
+    "./src/assets/block.py": "",
+    "./src/assets/bugs.py": "",
+    "./src/timer.py": "",
+    "./src/execute_code.py": ""
+  }
+}
