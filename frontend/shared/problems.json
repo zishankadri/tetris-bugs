@@ -2,9 +2,9 @@
     {
       "problem_id": 1,
       "title": "Add Two Numbers",
-      "func_name":"add_numbers",
-      "description": "Write a function named 'add_numbers' that takes two numbers as input and returns their sum.",
-      "solution_code": "def add_numbers(a, b):\n    return a + b",
+      "func_name":"add_nums",
+      "description": "Write a function named 'add_nums' that takes two numbers as input and returns their sum.",
+      "solution_code": "def add_nums(a,b):\n    return a+b",
       "test_cases": [
         {
           "input": [5, 3],
@@ -23,9 +23,9 @@
     {
       "problem_id": 2,
       "title": "Reverse a String",
-      "func_name":"reverse_string",
-      "description": "Write a function named 'reverse_string' that takes a string as input and returns the string reversed.",
-      "solution_code": "def reverse_string(s):\n    return s[::-1]",
+      "func_name":"rev_string",
+      "description": "Write a function named 'rev_string' that takes a string as input and returns the string reversed.",
+      "solution_code": "def rev_string(s):\n    return s[::-1]",
       "test_cases": [
         {
           "input": "hello",
@@ -46,7 +46,7 @@
       "title": "Check if a Number is Even",
       "func_name":"is_even",
       "description": "Write a function named 'is_even' that takes an integer and returns True if it's even, otherwise False.",
-      "solution_code": "def is_even(n):\n    return n % 2 == 0",
+      "solution_code": "def is_even(n):\n    return n%2==0",
       "test_cases": [
         {
           "input": 4,
@@ -67,7 +67,7 @@
       "title": "Find the Maximum Number in a List",
       "func_name":"find_max",
       "description": "Write a function named 'find_max' that takes a list of numbers and returns the largest number in the list.",
-      "solution_code": "def find_max(numbers):\n    return max(numbers)",
+      "solution_code": "def find_max(nums):\n    return max(nums)",
       "test_cases": [
         {
           "input": [1, 5, 2, 8, 3],
@@ -86,9 +86,9 @@
     {
       "problem_id": 5,
       "title": "Calculate Factorial",
-      "func_name":"factorial",
-      "description": "Write a function named 'factorial' to calculate the factorial of a non-negative integer.",
-      "solution_code": "def factorial(n):\n    if n == 0:\n        return 1\n    else:\n        return n * factorial(n - 1)",
+      "func_name":"fact",
+      "description": "Write a function named 'fact' to calculate the factorial of a non-negative integer.",
+      "solution_code": "def fact(n):\n    if n==0:\n        return 1\n    else:\n        return n*fact(n-1)",
       "test_cases": [
         {
           "input": 5,
@@ -128,9 +128,9 @@
     {
       "problem_id": 7,
       "title": "Check for Palindrome",
-      "func_name":"is_palindrome",
-      "description": "Write a function named 'is_palindrome' that checks if a string is a palindrome (reads the same forwards and backwards).",
-      "solution_code": "def is_palindrome(s):\n    return s.lower() == s.lower()[::-1]",
+      "func_name":"is_palin",
+      "description": "Write a function named 'is_palin' that checks if a string is a palindrome (reads the same forwards and backwards).",
+      "solution_code": "def is_palin(s):\n    return s.lower()==s.lower()[::-1]",
       "test_cases": [
         {
           "input": "racecar",
@@ -151,7 +151,7 @@
       "title": "Find the Smallest Number in a List",
       "func_name":"find_min",
       "description": "Write a function named 'find_min' that takes a list of numbers and returns the smallest number.",
-      "solution_code": "def find_min(numbers):\n    return min(numbers)",
+      "solution_code": "def find_min(nums):\n    return min(nums)",
       "test_cases": [
         {
           "input": [10, 5, 2, 8, 3],
@@ -172,7 +172,7 @@
       "title": "Sum all Numbers in a List",
       "func_name":"sum_list",
       "description": "Write a function named 'sum_list' that takes a list of numbers and returns their sum.",
-      "solution_code": "def sum_list(numbers):\n    return sum(numbers)",
+      "solution_code": "def sum_list(nums):\n    return sum(nums)",
       "test_cases": [
         {
           "input": [1, 2, 3, 4],
@@ -191,9 +191,9 @@
     {
       "problem_id": 10,
       "title": "Remove Duplicates from a List",
-      "func_name":"remove_duplicates",
-      "description": "Write a function named 'remove_duplicates' that takes a list and returns a new list with all duplicates removed.",
-      "solution_code": "def remove_duplicates(l):\n    return list(set(l))",
+      "func_name":"remove_dupes",
+      "description": "Write a function named 'remove_dupes' that takes a list and returns a new list with all duplicates removed.",
+      "solution_code": "def remove_dupes(l):\n    return list(set(l))",
       "test_cases": [
         {
           "input": [1, 2, 2, 3, 4, 4, 5],
@@ -212,9 +212,9 @@
     {
       "problem_id": 11,
       "title": "Calculate Average",
-      "func_name":"calculate_average",
-      "description": "Write a function named 'calculate_average' that takes a list of numbers and returns their average.",
-      "solution_code": "def calculate_average(numbers):\n    if not numbers:\n        return 0\n    return sum(numbers) / len(numbers)",
+      "func_name":"calc_avg",
+      "description": "Write a function named 'calc_avg' that takes a list of numbers and returns their average.",
+      "solution_code": "def calc_avg(nums):\n    if not nums:\n        return 0\n    return sum(nums)/len(nums)",
       "test_cases": [
         {
           "input": [1, 2, 3, 4, 5],
@@ -277,8 +277,8 @@
       "title": "Calculate Circle Area",
       "func_name":"circle_area",
 
-      "description": "Write a function named 'circle_area' that takes the radius of a circle and returns its area.",
-      "solution_code": "import math\ndef circle_area(r):\n    return math.pi * r**2",
+      "description": "Write a function named 'circle_area' that takes the radius of a circle and returns its area. You would be expected to import math.pi",
+      "solution_code": "import math\ndef circle_area(r):\n    return math.pi*r**2",
       "test_cases": [
         {
           "input": 1,
@@ -297,9 +297,9 @@
     {
       "problem_id": 15,
       "title": "Convert Celsius to Fahrenheit",
-      "func_name":"celsius_to_farenheit",
-      "description": "Write a function named 'celsius_to_fahrenheit' that converts a temperature from Celsius to Fahrenheit.",
-      "solution_code": "def celsius_to_fahrenheit(c):\n    return (c * 9/5) + 32",
+      "func_name":"c_to_f",
+      "description": "Write a function named 'c_to_f' that converts a temperature from Celsius to Fahrenheit.",
+      "solution_code": "def c_to_f(c):\n    return (c*9/5)+32",
       "test_cases": [
         {
           "input": 0,
@@ -439,7 +439,7 @@
       "title": "Check if List is Sorted",
       "func_name":"is_sorted",
       "description": "Write a function named 'is_sorted' that returns True if a list is sorted in ascending order, otherwise False.",
-      "solution_code": "def is_sorted(l):\n    return l == sorted(l)",
+      "solution_code": "def is_sorted(l):\n    return l==sorted(l)",
       "test_cases": [
         {
           "input": [1, 2, 3, 4],
@@ -458,9 +458,9 @@
     {
       "problem_id": 23,
       "title": "Reverse a List",
-      "func_name":"reverse_list",
-      "description": "Write a function named 'reverse_list' that reverses the order of elements in a list.",
-      "solution_code": "def reverse_list(l):\n    return l[::-1]",
+      "func_name":"rev_list",
+      "description": "Write a function named 'rev_list' that reverses the order of elements in a list.",
+      "solution_code": "def rev_list(l):\n    return l[::-1]",
       "test_cases": [
         {
           "input": [1, 2, 3],
@@ -500,10 +500,10 @@
 
     {
       "problem_id": 25,
-      "func_name":"is_digit_string",
+      "func_name":"is_num",
       "title": "Check if a String Contains Only Digits",
-      "description": "Write a function named 'is_digit_string' that returns True if a string contains only digits, otherwise False.",
-      "solution_code": "def is_digit_string(s):\n    return s.isdigit()",
+      "description": "Write a function named 'is_num' that returns True if a string contains only digits, otherwise False.",
+      "solution_code": "def is_num(s):\n    return s.isdigit()",
       "test_cases": [
         {
           "input": "12345",
@@ -543,9 +543,9 @@
     {
       "problem_id": 27,
       "title": "Convert a String to a List of Characters",
-      "func_name":"string_to_list",
-      "description": "Write a function named 'string_to_list' that takes a string and converts it into a list of its characters.",
-      "solution_code": "def string_to_list(s):\n    return list(s)",
+      "func_name":"str_to_list",
+      "description": "Write a function named 'str_to_list' that takes a string and converts it into a list of its characters.",
+      "solution_code": "def str_to_list(s):\n    return list(s)",
       "test_cases": [
         {
           "input": "hello",
@@ -563,10 +563,10 @@
     },
     {
       "problem_id": 28,
-      "func_name":"all_are_unique",
+      "func_name":"all_uniques",
       "title": "Check if all Elements in a List are Unique",
-      "description": "Write a function named 'are_all_unique' that returns True if all elements in a list are unique, otherwise False.",
-      "solution_code": "def are_all_unique(l):\n    return len(l) == len(set(l))",
+      "description": "Write a function named 'all_uniques' that returns True if all elements in a list are unique, otherwise False.",
+      "solution_code": "def all_uniques(l):\n    return len(l)==len(set(l))",
       "test_cases": [
         {
           "input": [1, 2, 3, 4],
