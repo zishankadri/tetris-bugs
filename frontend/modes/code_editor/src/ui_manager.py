@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from js import document
+from shared.audio_utils import play_place_sound
 from shared.ui_manager import BaseUIManager
 
 
@@ -10,6 +11,9 @@ class UIManager(BaseUIManager):
     def lock_visual_cells(self, *args, **kwargs) -> None:  # noqa: ANN002, ANN003
         """Lock the cells occupied by the current block visually."""
         super().lock_visual_cells(*args, **kwargs)
+
+        # Play place sound
+        play_place_sound()
 
         # Focus the input field
         input_box = document.getElementById("text-input")

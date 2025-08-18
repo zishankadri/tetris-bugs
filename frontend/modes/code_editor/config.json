@@ -6,6 +6,7 @@
     "../../shared/ui_manager.py": "shared/ui_manager.py",
     "../../shared/constants.py": "shared/constants.py",
     "../../shared/objects/block.py": "shared/objects/block.py",
+    "../../shared/audio_utils.py": "shared/audio_utils.py",
 
     "./src/controls.py": "",
     "./src/game.py": "",
