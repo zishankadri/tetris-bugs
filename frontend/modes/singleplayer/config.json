@@ -12,8 +12,8 @@
     "./src/game.py": "",
     "./src/modal.py": "",
 
-    "./src/question_helper.py": "",
     "./src/game_state.py": "",
+    "./src/question_manager.py": "",
     "./src/block_generator.py": ""
 
   }
