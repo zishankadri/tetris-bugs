@@ -5,11 +5,10 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from collections.abc import Iterator
 
-    from shared.objects.block import Block
-    from shared.ui_manager import BaseUIManager
+    from engine.objects.block import Block
+    from engine.ui_manager import BaseUIManager
 
-from game_state import update_result
-from shared.game import BaseGameManager
+from engine.game import BaseGameManager
 
 
 class GameManager(BaseGameManager):

@@ -1,9 +1,9 @@
 from __future__ import annotations
 
+from engine.ui_manager import BaseUIManager
 from js import document, localStorage
 from problem import problem_manager
-from problem_helper import check_code, get_ques
-from shared.ui_manager import BaseUIManager
+from shared.problem_helper import check_code, get_ques
 
 
 class UIManager(BaseUIManager):
