@@ -4,7 +4,7 @@ from datetime import UTC, datetime
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from engine.game import GameManager
+    from shared.game import GameManager
 from js import URL, Blob, document
 
 

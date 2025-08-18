@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from random import randint
 
-from engine.constants import MAX_BLOCK_LENGTH
+from shared.constants import MAX_BLOCK_LENGTH
 
 
 class Block:

@@ -1,6 +1,6 @@
-from engine.constants import TIMER_MINUTES
 from js import clearInterval, document, setInterval
 from pyodide.ffi import create_proxy
+from shared.constants import TIMER_MINUTES
 
 time_left = TIMER_MINUTES * 60
 interval_id = None

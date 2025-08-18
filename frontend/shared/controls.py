@@ -3,8 +3,8 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from engine.game import GameManager
-    from engine.ui_manager import UIManager
+    from shared.game import GameManager
+    from shared.ui_manager import UIManager
 
 from js import KeyboardEvent, document
 

@@ -1,7 +1,7 @@
 import random
 
-from engine.patterns import SingletonMeta
 from js import document
+from shared.patterns import SingletonMeta
 from shared.problem_helper import get_ques
 
 

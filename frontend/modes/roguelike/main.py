@@ -1,9 +1,9 @@
 import timer
 from controls import Controller
-from engine.game import BaseGameManager
 from js import document, setInterval, window
 from modal import continue_modal
 from pyodide.ffi import create_proxy
+from shared.game import BaseGameManager
 from ui_manager import UIManager
 
 game_manager = BaseGameManager(40, 25)

@@ -38,7 +38,6 @@ def block_generator(renderer: str) -> Generator[str]:
 
     question_details = question.send_question()
     lines = question_details["solution_code"].splitlines()
-    console.log(f"{lines = }")
     bottom_pointer = 1
     for line in reversed(lines):
         blocks = split_into_blocks(line.strip())
@@ -50,9 +49,8 @@ def block_generator(renderer: str) -> Generator[str]:
             blocks.pop(rand_j)
 
         player_line = game_manager.format_grid_line_as_text(-(bottom_pointer))
-        print(f"{player_line.strip()} ?= {line.strip()}")
+
         if player_line.strip() == line.strip():
-            print("YES")
             # Clear the row if correctly answered
             game_manager.clear_row(-(bottom_pointer))
             renderer.clear_row(-(bottom_pointer))

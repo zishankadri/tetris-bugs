@@ -3,10 +3,10 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from engine.ui_manager import BaseUIManager
+    from shared.ui_manager import BaseUIManager
 
-from engine.objects.block import Block
-from engine.patterns import SingletonMeta
+from shared.objects.block import Block
+from shared.patterns import SingletonMeta
 
 
 class BaseGameManager(metaclass=SingletonMeta):
