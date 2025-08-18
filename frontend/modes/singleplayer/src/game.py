@@ -6,19 +6,16 @@ if TYPE_CHECKING:
     from collections.abc import Iterator
 
     from shared.objects.block import Block
-    from shared.ui_manager import BaseUIManager
 
 from shared.game import BaseGameManager
 
 
 class GameManager(BaseGameManager):
-    # class GameManager(metaclass=SingletonMeta):
     """Game logic manager."""
 
     def __init__(self, *args: int, **kwargs: int) -> None:
         super().__init__(*args, **kwargs)
         self.block_gen: Iterator[Block] | None = None
-        self.ui_manager: BaseUIManager = None
 
     def spawn_next_block(self) -> None:
         """Generate and spawn the next block."""

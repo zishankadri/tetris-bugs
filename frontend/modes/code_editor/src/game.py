@@ -1,74 +1,41 @@
-from typing import TYPE_CHECKING
+from __future__ import annotations
 
-from standard import SingletonMeta
+import copy
 
-if TYPE_CHECKING:
-    from block import Block
+from shared.game import BaseGameManager
+
+Grid = list[list[str | None]]
 
 
-class GameManager(metaclass=SingletonMeta):  # noqa: D101
-    def __init__(self) -> None:
-        # Grid size
-        self.cols, self.rows = 40, 20
-        self.grid = [[None for _ in range(self.cols)] for _ in range(self.rows)]
-        self.current_block: Block | None = None
-        self.cells = []
+class GameManager(BaseGameManager):
+    """Game logic manager."""
 
-        # Keep track of last rendered state to minimize DOM updates
-        self._last_rendered_grid = [[None for _ in range(self.cols)] for _ in range(self.rows)]
+    def __init__(self, *args: int, **kwargs: int) -> None:
+        super().__init__(*args, **kwargs)
+        self.undo_stack: list[Grid] = []
+        self.redo_stack: list[Grid] = []
 
-    def render(self) -> None:
-        """Render grid and current block efficiently by updating only changed cells."""
-        # Copy current grid state including current_block overlay
-        combined_grid = [row.copy() for row in self.grid]
+    def lock_current_block(self) -> None:
+        """Lock current block into grid and add last state to undo history."""
+        self.undo_stack.append(copy.deepcopy(self.grid))
 
-        if self.current_block and self.current_block.falling:
-            for i, ch in enumerate(self.current_block.text):
-                tx = self.current_block.x + i
-                ty = self.current_block.y
-                if 0 <= tx < self.cols and 0 <= ty < self.rows:
-                    combined_grid[ty][tx] = ch
+        super().lock_current_block()
 
-        # Update only changed cells
-        for y in range(self.rows):
-            for x in range(self.cols):
-                cell = self.cells[y][x]
-                current_char = combined_grid[y][x]
-                last_char = self._last_rendered_grid[y][x]
-
-                if current_char != last_char:
-                    if current_char is None:
-                        cell.className = "cell"
-                        cell.style.background = ""
-                        cell.style.color = ""
-                        cell.textContent = ""
-                    else:
-                        cell.className = "block"
-                        cell.textContent = current_char
-
-                self._last_rendered_grid[y][x] = current_char
-
-    def tick(self) -> None:
-        """Advance game state by one step."""
-        if not self.current_block or not self.current_block.falling:
+    def undo(self) -> None:
+        """Undo block placement in the grid."""
+        if not self.undo_stack:
             return
+        self.redo_stack.append(copy.deepcopy(self.grid))
+        self.grid = self.undo_stack.pop()
+        self.ui_manager.render()
 
-        # Try to move block down
-        if not self.current_block.move(0, 1, self.grid):
-            # If can't move down, lock block and clear current_block
-            self.current_block.lock(self.grid)
-            self.current_block = None
-        self.render()
-
-    def format_grid_as_text(self) -> str:
-        """Format the grid as a text representation."""
-        lines = []
-        for row in self.grid:
-            line = "".join(cell if cell is not None else " " for cell in row)
-            # Only add non-empty lines
-            if line.strip():
-                lines.append(line)
-        return "\n".join(lines) if lines else ""
+    def redo(self) -> None:
+        """Redo block placement in the grid."""
+        if not self.redo_stack:
+            return
+        self.undo_stack.append(copy.deepcopy(self.grid))
+        self.grid = self.redo_stack.pop()
+        self.ui_manager.render()
 
 
-game_manager = GameManager()
+game_manager = GameManager(40, 20)

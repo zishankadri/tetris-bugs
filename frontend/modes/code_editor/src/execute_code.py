@@ -1,11 +1,17 @@
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from shared.game import BaseGameManager
+
 import io
 import sys
 
-from game import game_manager
 from js import document
 
 
-def run_python_code() -> str:
+def run_python_code(game_manager: BaseGameManager) -> str:
     """Run the python code in the grid."""
     code = game_manager.format_grid_as_text()
     buffer = io.StringIO()
