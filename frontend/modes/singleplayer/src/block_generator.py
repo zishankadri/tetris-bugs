@@ -2,8 +2,8 @@ import random
 from collections.abc import Generator
 
 from game import game_manager
-from js import console, document
-from shared.problem_helper import get_ques
+from js import console
+from question_helper import send_question
 
 
 def split_into_blocks(s: str, block_size: int = 5) -> list[str]:
@@ -36,9 +36,7 @@ def block_generator(renderer: str) -> Generator[str]:
                 return n - i
         return 1  # fallback if no empty row
 
-    question_id = random.randint(1, 28)  # noqa: S311
-    question_details = get_ques(question_id)
-    send_question(question_details)
+    question_details = send_question()
     lines = question_details["solution_code"].splitlines()
     bottom_pointer = 1
     for line in reversed(lines):
@@ -60,9 +58,3 @@ def block_generator(renderer: str) -> Generator[str]:
             # Incorrect answer
             # Increment the pointer, as the current row will stay stuck
             bottom_pointer = first_empty_row_from_bottom()
-
-
-def send_question(ques: dict) -> None:
-    """Send question to the question place in the game."""
-    question = document.getElementById("question")
-    question.textContent = ques["description"]
