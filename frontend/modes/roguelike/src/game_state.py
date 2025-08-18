@@ -1,10 +1,11 @@
 from js import document
-from problem_helper import check_code, question
+from problem_helper import check_code
+from question_manager import question_manager
 
 
 def check_win(code: str) -> bool:  # noqa: RET503
     """Check Whether the player has won or lost."""
-    result = check_code(code, question.ques_id)
+    result = check_code(code, question_manager.ques_id)
     if result in {"wrong code", "incorrect function"}:
         return False
     if result == "correct":

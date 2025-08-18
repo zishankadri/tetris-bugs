@@ -59,3 +59,4 @@ def block_generator(renderer: str) -> Generator[str]:
             # Incorrect answer
             # Increment the pointer, as the current row will stay stuck
             bottom_pointer = first_empty_row_from_bottom()
+            game_manager.bottom_pointer = bottom_pointer

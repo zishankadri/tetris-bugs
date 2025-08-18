@@ -20,6 +20,18 @@ class GameManager(BaseGameManager):
         super().__init__(*args, **kwargs)
         self.block_gen: Iterator[Block] | None = None
         self.ui_manager: BaseUIManager = None
+        self.bottom_pointer = 1
+
+    def tick(self) -> None:
+        """Advance game state by one step."""
+        if not self.current_block or not self.current_block.falling:
+            return
+
+        if self.current_block.y > self.rows - self.bottom_pointer:
+            self.lock_current_block()
+
+        if not self.current_block.move(0, 1, self.grid):
+            self.lock_current_block()
 
     def spawn_next_block(self) -> None:
         """Generate and spawn the next block."""

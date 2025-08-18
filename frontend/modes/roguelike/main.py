@@ -1,5 +1,5 @@
 from block_generator import block_generator
-from engine.controls import BaseController
+from controls import Controller
 from engine.ui_manager import BaseUIManager
 from game import game_manager
 from js import document, setInterval, window
@@ -11,7 +11,7 @@ def main() -> None:
     """Initialize the game."""
     ui_manager = BaseUIManager(game_manager)
     game_manager.ui_manager = ui_manager  # Inject ui_manager instance (dependency injection)
-    controller = BaseController(game_manager, ui_manager)  # Inject game_manager and ui_manager instance
+    controller = Controller(game_manager, ui_manager)  # Inject game_manager and ui_manager instance
     game_manager.block_gen = block_generator(ui_manager)
 
     ui_manager.create_visual_grid()  # Create display grid

@@ -13,6 +13,7 @@
     "./src/block_generator.py": "",
     "./src/question_manager.py": "",
     "./src/game_state.py": "",
+    "./src/controls.py": "",
     "./src/problem_helper.py": "",
     "./src/problems.json": ""
   }
