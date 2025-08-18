@@ -2,7 +2,6 @@ import random
 from collections.abc import Generator
 
 from game import game_manager
-from js import console
 from question_manager import question_manager
 
 
@@ -46,7 +45,6 @@ def block_generator(renderer: str) -> Generator[str]:
         while len(blocks):
             rand_j = random.randint(0, len(blocks) - 1)  # noqa: S311
             yield blocks[rand_j]
-            console.log(len(blocks[rand_j]))
             blocks.pop(rand_j)
 
         player_line = game_manager.format_grid_line_as_text(-(bottom_pointer))
