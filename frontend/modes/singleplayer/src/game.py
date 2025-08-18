@@ -8,6 +8,7 @@ if TYPE_CHECKING:
     from shared.objects.block import Block
     from shared.ui_manager import BaseUIManager
 
+from game_state import update_result
 from shared.game import BaseGameManager
 
 
@@ -22,7 +23,10 @@ class GameManager(BaseGameManager):
 
     def spawn_next_block(self) -> None:
         """Generate and spawn the next block."""
-        self.spawn_block(next(self.block_gen))
+        try:
+            self.spawn_block(next(self.block_gen))
+        except StopIteration:
+            update_result(self.format_grid_as_text())
 
     def lock_current_block(self) -> None:
         """Lock current block into grid."""

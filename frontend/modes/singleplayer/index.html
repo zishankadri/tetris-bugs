@@ -61,7 +61,7 @@
     </div>
 
     <!-- Question Space -->
-    <div id="question" class="m-5 w-[839px] h-[75px] bg-green-300 text-black  text-center font-retro">
+    <div id="question" class="m-5 p-0.5 w-[839px] h-[75px] bg-green-300 text-black  text-center font-retro">
     </div>
     <!-- Grid -->
     <div id="game"
@@ -71,6 +71,17 @@
     <!-- Cells will be populated by PyScript -->
     </div>
 
+  <div id="game-end" class="fixed inset-0 bg-black/50 items-center justify-center z-[9999] hidden bg-center m-5">
+    <div class="bg-black text-brand border border-brand p-16 rounded-lg min-w-[250px] retro-shadow">
+      <div id="game-state" class="font-retro leading-8">
+
+      </div>
+      <button id="retry-btn"
+        class="retro-btn w-full mt-4">
+        Go Again?
+      </button>
+    </div>
+  </div>
   </div>
 
     <py-script>
