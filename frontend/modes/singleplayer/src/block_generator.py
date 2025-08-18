@@ -3,7 +3,7 @@ from collections.abc import Generator
 
 from game import game_manager
 from js import console
-from question_helper import send_question
+from question_helper import question
 
 
 def split_into_blocks(s: str, block_size: int = 5) -> list[str]:
@@ -36,7 +36,7 @@ def block_generator(renderer: str) -> Generator[str]:
                 return n - i
         return 1  # fallback if no empty row
 
-    question_details = send_question()
+    question_details = question.send_question()
     lines = question_details["solution_code"].splitlines()
     bottom_pointer = 1
     for line in reversed(lines):
