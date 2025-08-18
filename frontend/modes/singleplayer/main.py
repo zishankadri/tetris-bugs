@@ -22,6 +22,11 @@ def main() -> None:
     continue_proxy = create_proxy(lambda _evt: continue_modal("modal-bg", ui_manager))
     continue_btn.addEventListener("click", continue_proxy)
 
+    # Bind the retry button to refresh the page
+    retry_button = document.getElementById("retry-btn")
+    retry_proxy = create_proxy(lambda _evt: window.location.reload())
+    retry_button.addEventListener("click", retry_proxy)
+
     # Bind keyboard event inside the game manager
     handle_key_proxy = create_proxy(lambda evt: controller.handle_key(evt))
     window.addEventListener("keydown", handle_key_proxy)
