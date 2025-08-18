@@ -1,6 +1,6 @@
+from engine.patterns import SingletonMeta
 from js import document
 from problem_helper import get_ques
-from shared.patterns import SingletonMeta
 
 
 class Problem(metaclass=SingletonMeta):  # noqa: D101

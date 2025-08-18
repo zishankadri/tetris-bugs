@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import copy
 
-from shared.game import BaseGameManager
+from engine.game import BaseGameManager
 
 Grid = list[list[str | None]]
 
