@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from collections.abc import Generator
 
-    from shared.ui_manager import BaseUIManager
+    from engine.ui_manager import BaseUIManager
 
 
 import random

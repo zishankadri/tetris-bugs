@@ -1,10 +1,10 @@
 from block_generator import block_generator
+from engine.controls import BaseController
+from engine.ui_manager import BaseUIManager
 from game import game_manager
 from js import document, setInterval, window
 from modal import continue_modal
 from pyodide.ffi import create_proxy
-from shared.controls import BaseController
-from shared.ui_manager import BaseUIManager
 
 
 def main() -> None:

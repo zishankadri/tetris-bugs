@@ -5,8 +5,8 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from js import HTMLInputElement, KeyboardEvent
 
-from shared.constants import MAX_BLOCK_LENGTH
-from shared.controls import BaseController
+from engine.constants import MAX_BLOCK_LENGTH
+from engine.controls import BaseController
 
 
 class Controller(BaseController):

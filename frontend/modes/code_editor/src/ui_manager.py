@@ -1,8 +1,8 @@
 from __future__ import annotations
 
+from engine.ui_manager import BaseUIManager
 from js import document
 from shared.audio_utils import play_place_sound
-from shared.ui_manager import BaseUIManager
 
 
 class UIManager(BaseUIManager):

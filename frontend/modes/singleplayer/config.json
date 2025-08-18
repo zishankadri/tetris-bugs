@@ -1,11 +1,11 @@
 {
   "files": {
-    "../../shared/game.py": "shared/game.py",
-    "../../shared/patterns.py": "shared/patterns.py",
-    "../../shared/controls.py": "shared/controls.py",
-    "../../shared/ui_manager.py": "shared/ui_manager.py",
-    "../../shared/constants.py": "shared/constants.py",
-    "../../shared/objects/block.py": "shared/objects/block.py",
+    "../../engine/game.py": "engine/game.py",
+    "../../engine/patterns.py": "engine/patterns.py",
+    "../../engine/controls.py": "engine/controls.py",
+    "../../engine/ui_manager.py": "engine/ui_manager.py",
+    "../../engine/constants.py": "engine/constants.py",
+    "../../engine/objects/block.py": "engine/objects/block.py",
 
     "./src/game.py": "",
     "./src/modal.py": "",

@@ -5,9 +5,9 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from collections.abc import Iterator
 
-    from shared.objects.block import Block
+    from engine.objects.block import Block
 
-from shared.game import BaseGameManager
+from engine.game import BaseGameManager
 
 
 class GameManager(BaseGameManager):
