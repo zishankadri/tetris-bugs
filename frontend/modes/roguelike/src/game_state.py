@@ -1,6 +1,5 @@
 from js import document
-from question_helper import question
-from shared.problem_helper import check_code
+from problem_helper import check_code, question
 
 
 def check_win(code: str) -> bool:  # noqa: RET503

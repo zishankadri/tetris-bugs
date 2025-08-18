@@ -5,10 +5,11 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from collections.abc import Iterator
 
-    from shared.objects.block import Block
-    from shared.ui_manager import BaseUIManager
+    from engine.objects.block import Block
+    from engine.ui_manager import BaseUIManager
 
-from shared.game import BaseGameManager
+from engine.game import BaseGameManager
+from game_state import update_result
 
 
 class GameManager(BaseGameManager):
@@ -25,15 +26,12 @@ class GameManager(BaseGameManager):
         try:
             self.spawn_block(next(self.block_gen))
         except StopIteration:
-            self.update_result(self.format_grid_as_text())
+            update_result(self.format_grid_as_text())
 
     def lock_current_block(self) -> None:
         """Lock current block into grid."""
         super().lock_current_block()
         self.spawn_next_block()
-
-    def update_result(self) -> None:
-        """Update result."""
 
 
 game_manager = GameManager(40, 20)
