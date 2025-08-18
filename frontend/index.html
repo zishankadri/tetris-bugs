@@ -18,6 +18,7 @@
 
 <body class="bg-[#111] text-brand flex flex-col items-center justify-center h-screen font-retro">
 
+
   <!-- Title -->
   <h1 class="text-3xl p-4 mb-12 hover:animate-retro-shadow text-center">Tetris Bugs</h1>
 
@@ -27,10 +28,35 @@
        class="retro-btn text-center text-lg">Single Player</a>
     <a href="modes/code_editor/index.html"
        class="retro-btn text-center text-lg">Code Editor</a>
-    <a href="modes/roguelike/index.html"
-       class="retro-btn text-center text-lg">roguelike</a>
+    <a href="modes/coderush/index.html"
+       class="retro-btn text-center text-lg">code rush</a>
   </div>
 
+
+
+  <!-- Button Click Sound Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const buttonSound = new Audio('shared/audio/button.wav');
+      buttonSound.volume = 0.5;
+
+
+      function playButtonSound() {
+        buttonSound.currentTime = 0;
+        buttonSound.play().catch(e => console.log('Button sound play failed:', e));
+      }
+      document.addEventListener('click', function(event) {
+        if (event.target.tagName === 'BUTTON' ||
+            event.target.tagName === 'A' ||
+            event.target.classList.contains('retro-btn') ||
+            event.target.classList.contains('retro-btn-secondary') ||
+            event.target.closest('.retro-btn') ||
+            event.target.closest('.retro-btn-secondary')) {
+          playButtonSound();
+        }
+      });
+    });
+  </script>
 </body>
 
 </html>
