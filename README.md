@@ -135,8 +135,8 @@ With some tweaks and backend, this could be a useful tool as a coding qualifier,
     <td>Meeting facilitation, Initial file structure, Set up Flask backend</td>
   </tr>
   <tr>
-    <td><a href="https://github.com/mhasanali2010"><img src="https://github.com/mhasanali2010.png" alt="mhasanali2010" width="64"></a></td>
-    <td><a href="https://github.com/mhasanali2010">mhasanali2010</a></td>
+    <td><a href="https://github.com/mhaxanali"><img src="https://github.com/mhaxanali.png" alt="mhaxanali" width="64"></a></td>
+    <td><a href="https://github.com/mhaxanali">mhaxanali</a></td>
     <td>timer logic, pause screen</td>
   </tr>
 </table>
