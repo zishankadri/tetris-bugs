@@ -2,9 +2,15 @@
   <img src="docs/img/logo.svg" alt="Project Logo" width="200"/>
 </p>
 
-# 👾 Tetris Bugs: The Code Editor You Never Asked For
+# 👾 Tetris Bugs
+Built by Grand Gardenias for **Python Discord's** Summer CodeJam 2025. Challenge theme: **Wrong Tool for the Job** using **Python in the Browser** via [Pyscript](https://pyscript.net/).
 
-Built by **Grand Gardenias** for Python Discord's Summer CodeJam 2025. Challenge theme: **Wrong Tool for the Job** using **Python in the Browser** via [Pyscript](https://pyscript.net/).
+## 🏆 What the Judges Said
+> "This project goes above and beyond what I commonly find in actual enterprise codebases... It makes me happy to see such a novel project backed by such a thoughtful codebase." - *Python Discord Judge*
+
+Screenshot:
+
+<img width="880" height="386" alt="pydis_code_review" src="https://github.com/user-attachments/assets/cb90b673-f632-4832-915b-976e219ad75e" />
 
 ---
 
