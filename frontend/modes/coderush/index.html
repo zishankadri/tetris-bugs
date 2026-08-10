@@ -46,6 +46,19 @@
     </div>
   </div>
 
+  <!--Pause Screen Modal-->
+  <div id="pause-screen" class="fixed inset-0 bg-black/50 flex items-center justify-center z-[9999]" hidden>
+    <div class="bg-black text-brand border border-brand p-16 rounded-lg min-w-[250px]">
+      <div class="font-retro leading-8">
+        The game is paused.
+      </div>
+      <button id="resume-btn"
+        class="retro-btn w-full mt-4">
+        ▶ Resume
+      </button>
+    </div>
+  </div>
+
   <!-- Game Over Modal -->
   <div id="game-over-modal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-[9999] hidden">
     <div class="bg-black text-brand border border-brand p-16 rounded-lg min-w-[300px] retro-shadow">
@@ -90,6 +103,7 @@
               class="retro-btn text-xs">
               Retry
             </button>
+          <button class="retro-btn text-xs" id="pause-btn">▐▐ Pause</button>
         </div>
         <div class="mt-4" id="code-output"></div>
       </div>
